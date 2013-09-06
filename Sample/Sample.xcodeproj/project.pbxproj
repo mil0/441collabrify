@@ -39,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		12650FB217DA6D1B007DF8F9 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
 		267F917117DA6C8B00550A01 /* Sample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		267F917417DA6C8B00550A01 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		267F917617DA6C8B00550A01 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -94,8 +95,12 @@
 		267F916817DA6C8B00550A01 = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD
+				12650FB217DA6D1B007DF8F9 /* config.h */,
+=======
 				267F91B217DA6CF900550A01 /* Collabrify.bundle */,
 				267F91B317DA6CF900550A01 /* Collabrify.framework */,
+>>>>>>> 0752c18eb6c19045b8fa1a2b2a083d519b8e5ca4
 				267F917A17DA6C8B00550A01 /* Sample */,
 				267F91A117DA6C8B00550A01 /* SampleTests */,
 				267F917317DA6C8B00550A01 /* Frameworks */,
@@ -483,6 +488,7 @@
 				267F91AE17DA6C8B00550A01 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		267F91AF17DA6C8B00550A01 /* Build configuration list for PBXNativeTarget "SampleTests" */ = {
 			isa = XCConfigurationList;
@@ -491,6 +497,7 @@
 				267F91B117DA6C8B00550A01 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
