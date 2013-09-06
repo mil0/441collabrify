@@ -24,6 +24,8 @@
 		267F919E17DA6C8B00550A01 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 267F917617DA6C8B00550A01 /* Foundation.framework */; };
 		267F91A617DA6C8B00550A01 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 267F91A417DA6C8B00550A01 /* InfoPlist.strings */; };
 		267F91A917DA6C8B00550A01 /* SampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 267F91A817DA6C8B00550A01 /* SampleTests.m */; };
+		267F91B417DA6CF900550A01 /* Collabrify.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 267F91B217DA6CF900550A01 /* Collabrify.bundle */; };
+		267F91B517DA6CF900550A01 /* Collabrify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 267F91B317DA6CF900550A01 /* Collabrify.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +63,8 @@
 		267F91A517DA6C8B00550A01 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		267F91A717DA6C8B00550A01 /* SampleTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SampleTests.h; sourceTree = "<group>"; };
 		267F91A817DA6C8B00550A01 /* SampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SampleTests.m; sourceTree = "<group>"; };
+		267F91B217DA6CF900550A01 /* Collabrify.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Collabrify.bundle; sourceTree = "<group>"; };
+		267F91B317DA6CF900550A01 /* Collabrify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Collabrify.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +75,7 @@
 				267F917517DA6C8B00550A01 /* UIKit.framework in Frameworks */,
 				267F917717DA6C8B00550A01 /* Foundation.framework in Frameworks */,
 				267F917917DA6C8B00550A01 /* CoreGraphics.framework in Frameworks */,
+				267F91B517DA6CF900550A01 /* Collabrify.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,7 +95,12 @@
 		267F916817DA6C8B00550A01 = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD
 				12650FB217DA6D1B007DF8F9 /* config.h */,
+=======
+				267F91B217DA6CF900550A01 /* Collabrify.bundle */,
+				267F91B317DA6CF900550A01 /* Collabrify.framework */,
+>>>>>>> 0752c18eb6c19045b8fa1a2b2a083d519b8e5ca4
 				267F917A17DA6C8B00550A01 /* Sample */,
 				267F91A117DA6C8B00550A01 /* SampleTests */,
 				267F917317DA6C8B00550A01 /* Frameworks */,
@@ -242,6 +252,7 @@
 				267F918B17DA6C8B00550A01 /* Default-568h@2x.png in Resources */,
 				267F918E17DA6C8B00550A01 /* MainStoryboard_iPhone.storyboard in Resources */,
 				267F919117DA6C8B00550A01 /* MainStoryboard_iPad.storyboard in Resources */,
+				267F91B417DA6CF900550A01 /* Collabrify.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -397,6 +408,10 @@
 		267F91AD17DA6C8B00550A01 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Sample/Sample-Prefix.pch";
 				INFOPLIST_FILE = "Sample/Sample-Info.plist";
@@ -408,6 +423,10 @@
 		267F91AE17DA6C8B00550A01 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Sample/Sample-Prefix.pch";
 				INFOPLIST_FILE = "Sample/Sample-Info.plist";
