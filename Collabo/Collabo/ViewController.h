@@ -10,5 +10,8 @@
 #import <Collabrify/Collabrify.h>
 
 @interface ViewController : UIViewController
+- (IBAction)undo:(id)sender;
+- (IBAction)redo:(id)sender;
+@property (weak, nonatomic) IBOutlet UITextView *textView;
 
 @end
