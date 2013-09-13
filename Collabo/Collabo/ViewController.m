@@ -34,11 +34,15 @@
     [super touchesBegan:touches withEvent:event];
 }
 
+
+// Undoing
 - (IBAction)undo:(id)sender {
     [self.textView.undoManager undo];
 }
 
+// Redoing
 - (IBAction)redo:(id)sender {
     [self.textView.undoManager redo];
 }
+
 @end

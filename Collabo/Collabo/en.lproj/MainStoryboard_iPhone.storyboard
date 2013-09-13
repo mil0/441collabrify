@@ -24,8 +24,6 @@
                                             <action selector="redo:" destination="2" id="00a-F4-zvP"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem title="Create" id="vOw-xi-g13"/>
-                                    <barButtonItem title="Join Session" id="n2V-sL-7c0"/>
                                 </items>
                             </toolbar>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d8g-s6-3xa">
