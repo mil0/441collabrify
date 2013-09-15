@@ -18,8 +18,16 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    
-    
+    NSURL *url = [NSURL URLWithString:@"http:\\collabrify-cloud.appspot.com/request"];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLCacheStorageNotAllowed timeoutInterval:3.0];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:@"text/html" forHTTPHeaderField:@"Content-Type"];
+    [request setHTTPBody:nil];
+    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    [connection start];
+    if (connection) {
+        NSLog(@"done");
+    }
 }
 
 - (void)didReceiveMemoryWarning
