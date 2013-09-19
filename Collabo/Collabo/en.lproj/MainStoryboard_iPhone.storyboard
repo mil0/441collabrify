@@ -24,6 +24,16 @@
                                             <action selector="redo:" destination="2" id="00a-F4-zvP"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem title="Create" id="dNX-Mt-IV5">
+                                        <connections>
+                                            <action selector="create:" destination="2" id="h5J-Gp-fSX"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Join" id="Iol-6C-I7X">
+                                        <connections>
+                                            <action selector="join:" destination="2" id="4vw-RK-87I"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d8g-s6-3xa">
@@ -52,6 +62,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="-11" y="75"/>
         </scene>
     </scenes>
     <classes>
@@ -61,6 +72,8 @@
         <class className="ViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
             <relationships>
+                <relationship kind="action" name="create:"/>
+                <relationship kind="action" name="join:"/>
                 <relationship kind="action" name="redo:"/>
                 <relationship kind="action" name="undo:"/>
                 <relationship kind="outlet" name="textView" candidateClass="UITextView"/>

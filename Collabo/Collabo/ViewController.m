@@ -17,17 +17,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-    NSURL *url = [NSURL URLWithString:@"http:\\collabrify-cloud.appspot.com/request"];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLCacheStorageNotAllowed timeoutInterval:3.0];
-    [request setHTTPMethod:@"POST"];
-    [request setValue:@"text/html" forHTTPHeaderField:@"Content-Type"];
-    [request setHTTPBody:nil];
-    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-    [connection start];
-    if (connection) {
-        NSLog(@"done");
-    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -46,11 +35,41 @@
 // Undoing
 - (IBAction)undo:(id)sender {
     [self.textView.undoManager undo];
+    NSLog(@"undo");
 }
 
 // Redoing
 - (IBAction)redo:(id)sender {
     [self.textView.undoManager redo];
+    NSLog(@"redo");
 }
 
+- (void) connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response{
+    NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)response;
+    int code = [httpResponse statusCode];
+    NSString *str;
+    NSMutableString *myString = [NSMutableString string];
+    str = [NSString stringWithFormat:@"%d", code];
+    [myString appendString:str];
+    NSLog(myString);
+}
+
+- (IBAction)create:(id)sender {
+    // Do any additional setup after loading the view, typically from a nib.
+    NSURL *url = [NSURL URLWithString:@"http:\\collabrify-cloud.appspot.com/request"];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLCacheStorageNotAllowed timeoutInterval:3.0];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:@"text/html" forHTTPHeaderField:@"Content-Type"];
+    [request setHTTPBody:nil];
+    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    [connection start];
+    if (connection) {
+        NSLog(@"done");
+    }
+    
+    
+}
+
+- (IBAction)join:(id)sender {
+}
 @end

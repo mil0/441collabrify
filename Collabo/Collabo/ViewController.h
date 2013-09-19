@@ -13,5 +13,9 @@
 - (IBAction)undo:(id)sender;
 - (IBAction)redo:(id)sender;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
+- (IBAction)create:(id)sender;
+- (IBAction)join:(id)sender;
+
+- (void) connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response;
 
 @end
