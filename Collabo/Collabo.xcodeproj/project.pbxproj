@@ -9,7 +9,9 @@
 /* Begin PBXBuildFile section */
 		26056CCB17E28034005A8312 /* EventMessage.mm in Sources */ = {isa = PBXBuildFile; fileRef = 26056CCA17E28034005A8312 /* EventMessage.mm */; };
 		26056CCE17E280DB005A8312 /* textevent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 26056CCC17E280DB005A8312 /* textevent.cpp */; };
-		26056CD117E6468D005A8312 /* CollaboClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 26056CD017E6468D005A8312 /* CollaboClient.m */; };
+		26056CD417E653ED005A8312 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 26056CD217E653D7005A8312 /* libstdc++.dylib */; };
+		26056CD617E653FC005A8312 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26056CD517E653FC005A8312 /* QuartzCore.framework */; };
+		26056CDC17E92739005A8312 /* JoinSessionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26056CDB17E92739005A8312 /* JoinSessionController.m */; };
 		2607D78317DA73F0009421F9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2607D78217DA73F0009421F9 /* UIKit.framework */; };
 		2607D78517DA73F0009421F9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2607D78417DA73F0009421F9 /* Foundation.framework */; };
 		2607D78717DA73F0009421F9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2607D78617DA73F0009421F9 /* CoreGraphics.framework */; };
@@ -81,8 +83,10 @@
 		26056CCA17E28034005A8312 /* EventMessage.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EventMessage.mm; sourceTree = "<group>"; };
 		26056CCC17E280DB005A8312 /* textevent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = textevent.cpp; sourceTree = "<group>"; };
 		26056CCD17E280DB005A8312 /* textevent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = textevent.h; sourceTree = "<group>"; };
-		26056CCF17E6468D005A8312 /* CollaboClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollaboClient.h; sourceTree = "<group>"; };
-		26056CD017E6468D005A8312 /* CollaboClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollaboClient.m; sourceTree = "<group>"; };
+		26056CD217E653D7005A8312 /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
+		26056CD517E653FC005A8312 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		26056CDA17E92739005A8312 /* JoinSessionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JoinSessionController.h; sourceTree = "<group>"; };
+		26056CDB17E92739005A8312 /* JoinSessionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JoinSessionController.m; sourceTree = "<group>"; };
 		2607D77F17DA73F0009421F9 /* Collabo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Collabo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2607D78217DA73F0009421F9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2607D78417DA73F0009421F9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -200,6 +204,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26056CD617E653FC005A8312 /* QuartzCore.framework in Frameworks */,
+				26056CD417E653ED005A8312 /* libstdc++.dylib in Frameworks */,
 				2607D84117DA74F5009421F9 /* libz.dylib in Frameworks */,
 				2607D83F17DA74EC009421F9 /* SystemConfiguration.framework in Frameworks */,
 				2607D78317DA73F0009421F9 /* UIKit.framework in Frameworks */,
@@ -225,6 +231,8 @@
 		2607D77617DA73F0009421F9 = {
 			isa = PBXGroup;
 			children = (
+				26056CD517E653FC005A8312 /* QuartzCore.framework */,
+				26056CD217E653D7005A8312 /* libstdc++.dylib */,
 				26056CCC17E280DB005A8312 /* textevent.cpp */,
 				26056CCD17E280DB005A8312 /* textevent.h */,
 				26056CC917E28034005A8312 /* EventMessage.h */,
@@ -272,8 +280,8 @@
 				2607D7A017DA73F0009421F9 /* ViewController.h */,
 				2607D7A117DA73F0009421F9 /* ViewController.m */,
 				2607D78917DA73F0009421F9 /* Supporting Files */,
-				26056CCF17E6468D005A8312 /* CollaboClient.h */,
-				26056CD017E6468D005A8312 /* CollaboClient.m */,
+				26056CDA17E92739005A8312 /* JoinSessionController.h */,
+				26056CDB17E92739005A8312 /* JoinSessionController.m */,
 			);
 			path = Collabo;
 			sourceTree = "<group>";
@@ -590,7 +598,7 @@
 				2607D83C17DA7450009421F9 /* wire_format_lite.cc in Sources */,
 				26056CCB17E28034005A8312 /* EventMessage.mm in Sources */,
 				26056CCE17E280DB005A8312 /* textevent.cpp in Sources */,
-				26056CD117E6468D005A8312 /* CollaboClient.m in Sources */,
+				26056CDC17E92739005A8312 /* JoinSessionController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

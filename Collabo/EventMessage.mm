@@ -13,6 +13,5 @@
 - (void) doSomething {
     Event * event = new Event();
     event->set_eventtype(EventType(0));
-    
 }
 @end
