@@ -9,13 +9,19 @@
 #import <UIKit/UIKit.h>
 #import <Collabrify/Collabrify.h>
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController{
+    CollabrifyClient * client;
+}
+
+
 - (IBAction)undo:(id)sender;
 - (IBAction)redo:(id)sender;
-@property (weak, nonatomic) IBOutlet UITextView *textView;
+
 - (IBAction)create:(id)sender;
 - (IBAction)join:(id)sender;
 
 - (void) connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response;
+@property (weak, nonatomic) IBOutlet UITextView *textView;
+
 
 @end

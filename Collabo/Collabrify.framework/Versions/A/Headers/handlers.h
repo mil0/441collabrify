@@ -20,4 +20,5 @@ typedef void (^CreateSessionCompletionHandler)(int64_t sessionID, CollabrifyErro
  * baseFileSize is 0 if there is no base file
  */
 typedef void (^JoinSessionCompletionHandler)(int64_t maxOrderID, int32_t baseFileSize, CollabrifyError *error);
+
 typedef void (^LeaveSessionCompletionHandler)(BOOL success, CollabrifyError *error);
