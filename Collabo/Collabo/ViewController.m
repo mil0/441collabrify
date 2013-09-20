@@ -118,7 +118,7 @@
     }
     
     */
-    NSString * name_tag = @"hello5";
+    NSString * name_tag = @"hello6";
     NSString * password_test = @"hello";
     
     NSString *test_name = @"CREATOR";
@@ -178,6 +178,9 @@
 
 - (IBAction)join:(id)sender {
 
+    //tags are a whole string.
+    //list session with tags - this is what is used for join session 
+    
     NSString *test = @"JOINER";
     NSError *error;
     
