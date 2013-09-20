@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 
-@interface ViewController ()
+@interface ViewController () <CollabrifyClientDelegate, CollabrifyClientDataSource>
     
 @end
 
@@ -17,7 +17,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
 }
+-(void)viewWillAppear:(BOOL)animated{
+    
+    [client setDelegate:self];
+    
+}
+- (void)client:(CollabrifyClient *)client encounteredError:(CollabrifyError *)error{
+    NSLog(@"%", error);
+}
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -74,10 +84,8 @@
     }
     
     */
-    NSString * name_tag = @"hello";
-    NSArray * tag_test = nil;
+    NSString * name_tag = @"hello5";
     NSString * password_test = @"hello";
-    bool startpause_test = TRUE;
     
     NSString *test = @"bob";
     NSError *error;
@@ -89,6 +97,8 @@
                        accessToken:@"XY3721425NoScOpE"
                     getLatestEvent:NO
                              error:&error];
+    // combination of tag/name needs to be unique
+    
     
     [client createSessionWithName:name_tag
                              tags:tags
@@ -100,6 +110,19 @@
                     if(!error){
                         NSLog(@"Session Successfully Created");
                         //[self performSegueWithIdentifier:@"createTheSession"sender:self];
+                        bool test2 = [client isInSession];
+                        
+                        
+                        if (test2) {
+                            NSLog(@"is in session, and SESSION ID IS:");
+                            int64_t session_ID = [client currentSessionID];
+                            NSLog([NSString stringWithFormat:@"%lld", session_ID]);
+                        }
+                        else {
+                            NSLog(@"is not in sessoin");
+                            NSLog([error localizedDescription]);
+                            
+                        }
                     }
                     else{
                         NSLog(@"%@", error);
@@ -110,19 +133,48 @@
                 }];
 
 
-    bool test2 = [client isInSession];
+
+    
 
 
-    if (test2) {
-        NSLog(@"is in session");
-    }
-    else {
-        NSLog(@"is not in sessoin");
-        NSLog([error localizedDescription]);
-        
-    }
+}
+
+- (IBAction)join:(id)sender {
+
+    NSString * password_test = @"hello";
+    bool startpause_test = TRUE;
+    int64_t sessionID_test = 2291098;
+    
+    [client joinSessionWithID:sessionID_test
+                      password:password_test
+                   startPaused:startpause_test
+             completionHandler:^(int64_t code, int32_t code2, CollabrifyError *error) {
+                 
+                 if (!error) {
+                     NSLog(@"join completed");
+                     
+                     bool test2 = [client isInSession];
+                     
+                     
+                     if (test2) {
+                         NSLog(@"is in session, and SESSION ID IS:");
+                         int64_t session_ID = [client currentSessionID];
+                         NSLog([NSString stringWithFormat:@"%lld", session_ID]);
+                     }
+                     else {
+                         NSLog(@"NOT IN SESSION");
+                     }
+                     
+                 }
+                 else {
+                     NSLog(@"join not completed");
+                 }
+             }];
     
     
+    
+}
+- (IBAction)exit:(id)sender {
     [client leaveAndDeleteSession:YES completionHandler:
      ^(BOOL success, CollabrifyError *error){
          if (success) {
@@ -135,17 +187,5 @@
      }];
 }
 
-- (IBAction)join:(id)sender {
-    //NSString * name_tag = @"hello";
-    //NSArray * tag_test = nil;
-    NSString * password_test = @"hello";
-    bool startpause_test = TRUE;
-    int64_t sessionID_test = 12;
-    
-    [client joinSessionWithID:sessionID_test
-                      password:password_test
-                   startPaused:startpause_test
-             completionHandler:^(int64_t code, int32_t code2, CollabrifyError *error) {
-                 NSLog(@"join completed");}];
-}
+
 @end
