@@ -34,6 +34,7 @@
                                             <action selector="join:" destination="2" id="TiI-FW-Rxy"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem title="EX" id="651-3o-hDw"/>
                                 </items>
                             </toolbar>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d8g-s6-3xa">
