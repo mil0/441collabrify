@@ -14,7 +14,6 @@
 		26056CCE17E280DB005A8312 /* textevent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 26056CCC17E280DB005A8312 /* textevent.cpp */; };
 		26056CD417E653ED005A8312 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 26056CD217E653D7005A8312 /* libstdc++.dylib */; };
 		26056CD617E653FC005A8312 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26056CD517E653FC005A8312 /* QuartzCore.framework */; };
-		26056CDC17E92739005A8312 /* JoinSessionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26056CDB17E92739005A8312 /* JoinSessionController.m */; };
 		2607D78317DA73F0009421F9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2607D78217DA73F0009421F9 /* UIKit.framework */; };
 		2607D78517DA73F0009421F9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2607D78417DA73F0009421F9 /* Foundation.framework */; };
 		2607D78717DA73F0009421F9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2607D78617DA73F0009421F9 /* CoreGraphics.framework */; };
@@ -94,8 +93,6 @@
 		26056CCD17E280DB005A8312 /* textevent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = textevent.h; sourceTree = "<group>"; };
 		26056CD217E653D7005A8312 /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
 		26056CD517E653FC005A8312 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		26056CDA17E92739005A8312 /* JoinSessionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JoinSessionController.h; sourceTree = "<group>"; };
-		26056CDB17E92739005A8312 /* JoinSessionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JoinSessionController.m; sourceTree = "<group>"; };
 		2607D77F17DA73F0009421F9 /* Collabo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Collabo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2607D78217DA73F0009421F9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2607D78417DA73F0009421F9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -295,8 +292,6 @@
 				12801D5B17ECEE5A009979B9 /* SessionViewController.h */,
 				12801D5C17ECEE5A009979B9 /* SessionViewController.m */,
 				2607D78917DA73F0009421F9 /* Supporting Files */,
-				26056CDA17E92739005A8312 /* JoinSessionController.h */,
-				26056CDB17E92739005A8312 /* JoinSessionController.m */,
 			);
 			path = Collabo;
 			sourceTree = "<group>";
@@ -613,7 +608,6 @@
 				2607D83C17DA7450009421F9 /* wire_format_lite.cc in Sources */,
 				26056CCB17E28034005A8312 /* EventMessage.mm in Sources */,
 				26056CCE17E280DB005A8312 /* textevent.cpp in Sources */,
-				26056CDC17E92739005A8312 /* JoinSessionController.m in Sources */,
 				12801D5D17ECEE5A009979B9 /* SessionViewController.m in Sources */,
 				12801D6017ECEF5B009979B9 /* CreateSessionViewController.m in Sources */,
 				12801D6317ECEF8D009979B9 /* JoinSessionViewController.m in Sources */,
