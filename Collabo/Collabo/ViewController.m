@@ -121,12 +121,12 @@
     NSString * name_tag = @"hello5";
     NSString * password_test = @"hello";
     
-    NSString *test = @"bob";
+    NSString *test_name = @"CREATOR";
     NSError *error;
     NSArray *tags = [[NSArray alloc] initWithObjects:@"Some Tags", nil];
 
-    client = [[CollabrifyClient alloc] initWithGmail:test
-                       displayName:test
+    client = [[CollabrifyClient alloc] initWithGmail:test_name
+                       displayName:test_name
                       accountGmail:@"441fall2013@umich.edu"
                        accessToken:@"XY3721425NoScOpE"
                     getLatestEvent:NO
@@ -151,6 +151,9 @@
                             NSLog(@"is in session, and SESSION ID IS:");
                             int64_t session_ID = [client currentSessionID];
                             NSLog([NSString stringWithFormat:@"%lld", session_ID]);
+                            int64_t participationID = [client participantID];
+                            NSLog([NSString stringWithFormat:@"%lld", participationID]);
+                            
                         }
                         else {
                             NSLog(@"is not in sessoin");
@@ -175,6 +178,18 @@
 
 - (IBAction)join:(id)sender {
 
+    NSString *test = @"JOINER";
+    NSError *error;
+    
+    client = [[CollabrifyClient alloc] initWithGmail:test
+                                         displayName:test
+                                        accountGmail:@"441fall2013@umich.edu"
+                                         accessToken:@"XY3721425NoScOpE"
+                                      getLatestEvent:NO
+                                               error:&error];
+    
+    
+    //JOIN SESSION;
     NSString * password_test = @"hello";
     bool startpause_test = TRUE;
     int64_t sessionID_test = 2291098;
