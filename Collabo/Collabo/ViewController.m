@@ -212,11 +212,13 @@
                      }
                      else {
                          NSLog(@"NOT IN SESSION");
+                         NSLog(@"%@", error);
                      }
                      
                  }
                  else {
                      NSLog(@"join not completed");
+                     NSLog(@"%@", error);
                  }
              }];
     
@@ -232,6 +234,7 @@
          }
          else {
              NSLog(@"logout not completed");
+             
          }
          
      }];
