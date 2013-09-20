@@ -13,12 +13,20 @@
     NSString * tempChange;
     NSString * initialText;
     NSTimer * eventDelay;
+    CollabrifyClient * client;
 }
-- (IBAction)join:(id)sender;
+
+
 - (IBAction)undo:(id)sender;
 - (IBAction)redo:(id)sender;
+
 - (IBAction)create:(id)sender;
+- (IBAction)join:(id)sender;
+
+- (void) connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
+
 @property NSString * initialText;
+
 @end
 
