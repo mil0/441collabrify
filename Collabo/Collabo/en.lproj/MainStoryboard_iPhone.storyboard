@@ -32,7 +32,6 @@
                                     <barButtonItem title="Join" id="ylI-Fw-me6">
                                         <connections>
                                             <action selector="join:" destination="2" id="TiI-FW-Rxy"/>
-                                            <segue destination="3Bl-HX-kLh" kind="modal" id="3gw-hc-hLU"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>
@@ -64,44 +63,22 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>
             </objects>
         </scene>
-        <!--Create Session Controller-->
-        <scene sceneID="qFL-bV-eGC">
-            <objects>
-                <viewController id="3Bl-HX-kLh" customClass="CreateSessionController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="mre-3e-yty">
-                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yzw-cB-rwu">
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pfi-EH-VAn">
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="Join">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="yzw-cB-rwu" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="9mJ-ri-MSY"/>
-                            <constraint firstItem="yzw-cB-rwu" firstAttribute="leading" secondItem="mre-3e-yty" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="Fy5-Yp-45N"/>
-                            <constraint firstItem="yzw-cB-rwu" firstAttribute="top" secondItem="mre-3e-yty" secondAttribute="top" constant="20" symbolic="YES" type="default" id="LpK-YR-829"/>
-                            <constraint firstAttribute="bottom" secondItem="pfi-EH-VAn" secondAttribute="bottom" constant="83" id="PqR-SZ-8uD"/>
-                            <constraint firstItem="pfi-EH-VAn" firstAttribute="leading" secondItem="mre-3e-yty" secondAttribute="leading" constant="141" id="g88-jw-xz1"/>
-                        </constraints>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="S2w-Z8-ZXw" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="568" y="43"/>
-        </scene>
     </scenes>
+    <classes>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="ViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="create:"/>
+                <relationship kind="action" name="join:"/>
+                <relationship kind="action" name="redo:"/>
+                <relationship kind="action" name="undo:"/>
+                <relationship kind="outlet" name="textView" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
