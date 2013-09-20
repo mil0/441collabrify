@@ -223,6 +223,7 @@
     
     
 }
+
 - (IBAction)exit:(id)sender {
     [client leaveAndDeleteSession:YES completionHandler:
      ^(BOOL success, CollabrifyError *error){
@@ -235,4 +236,6 @@
          
      }];
 }
+
+
 @end
