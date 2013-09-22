@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface MainMenu : UIViewController
-
+#import <Collabrify/Collabrify.h>
+@interface MainMenu : UIViewController <CollabrifyClientDelegate> {
+    CollabrifyClient * client;
+}
+@property CollabrifyClient * client;
 @end

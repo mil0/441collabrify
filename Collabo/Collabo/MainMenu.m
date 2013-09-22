@@ -16,9 +16,19 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
+    
+
+    NSString *test_name = @"CREATOR";
+    NSError *error;
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        client = [[CollabrifyClient alloc] initWithGmail:test_name
+                                             displayName:test_name
+                                            accountGmail:@"441fall2013@umich.edu"
+                                             accessToken:@"XY3721425NoScOpE"
+                                          getLatestEvent:NO
+                                                   error:&error];
+
     }
     return self;
 }
@@ -33,6 +43,10 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    
 }
 
 @end
