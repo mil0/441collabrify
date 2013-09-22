@@ -43,7 +43,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.83725312270534635" green="0.97553772314353715" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.7973723273342006" green="1" blue="0.61795866663730892" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="Rh0-xy-WsM" firstAttribute="centerX" secondItem="I1I-Oz-Kgq" secondAttribute="centerX" type="default" id="JJ3-KV-xgq"/>
                             <constraint firstItem="I1I-Oz-Kgq" firstAttribute="leading" secondItem="Nwi-nh-Okj" secondAttribute="leading" constant="40" id="gm8-gV-aFR"/>
@@ -219,7 +219,6 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
             <relationships>
                 <relationship kind="action" name="create:"/>
-                <relationship kind="action" name="exit:"/>
                 <relationship kind="action" name="join:"/>
                 <relationship kind="action" name="redo:"/>
                 <relationship kind="action" name="undo:"/>
