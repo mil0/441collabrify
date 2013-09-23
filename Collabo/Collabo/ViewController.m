@@ -18,7 +18,8 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    
+    tempChange = [[NSMutableString alloc] init];
+    deleteString = [[NSMutableString alloc] init];
     //turning autocorrection / auto-cap off
     _textView.autocorrectionType = UITextAutocorrectionTypeNo;
     _textView.autocapitalizationType = UITextAutocapitalizationTypeNone;
@@ -71,10 +72,6 @@
     [eventDelay invalidate]; eventDelay = nil;
     //make new timer, after 1.5sec user has stopped typing
     //register change
-    
-    NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-    [dict setObject:text forKey:@"text"];
-    [dict setObject:NSStringFromRange(range) forKey:@"range"];
     
     eventDelay = [NSTimer scheduledTimerWithTimeInterval:1.5
                                                   target:self
