@@ -14,12 +14,12 @@
 
 @implementation ViewController
 
-@synthesize initialText;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-
+    tempChange = [[NSMutableString alloc] init];
+    deleteString = [[NSMutableString alloc] init];
 
 }
 -(void)viewWillAppear:(BOOL)animated{
@@ -38,19 +38,41 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)textViewDidChangeSelection:(UITextView *)textView {
+    //unichar prevChar = [textView.text characterAtIndex:(location - 1)];
+    //NSString *prevCharStr = [NSString stringWithFormat:@"%C", prevChar];
+}
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
+    
+    if(range.length > 1){
+        return NO;
+    }
+    
+    //get cursor
+    NSUInteger cursorPosition = textView.selectedRange.location;
+    // NSLog([NSString stringWithFormat:@"Cursor Position: %d", cursorPosition]);
+    if (range.length == 0) {
+        //insertions
+        char appendedChar = [text characterAtIndex:0];
+        [tempChange appendFormat:@"%c", appendedChar];
+        
+    }
+    else if (range.length == 1){
+        //deletion
+        NSLog(@"delete");
+        
+    }
+    
+    
     [eventDelay invalidate]; eventDelay = nil;
     //make new timer, after 1.5sec user has stopped typing
     //register change
-    NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-    [dict setObject:text forKey:@"text"];
-    [dict setObject:NSStringFromRange(range) forKey:@"range"];
     
     eventDelay = [NSTimer scheduledTimerWithTimeInterval:1.5
                                                   target:self
                                                 selector:@selector(eventDelayFire:)
-                                                userInfo:dict
+                                                userInfo:nil
                                                  repeats:NO];
     return YES;
 }
@@ -66,9 +88,12 @@
 //detect change from previous document content
 -(void)eventDelayFire:(NSTimer *)t{
     assert(t == eventDelay);
-    NSDictionary * dict = [eventDelay userInfo];
-    
+    NSLog(@"Event Fired:");
+    NSLog(@"%@", tempChange);
+    [tempChange setString:@""];
 }
+
+
 
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{

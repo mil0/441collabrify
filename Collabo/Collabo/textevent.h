@@ -37,11 +37,9 @@ class Event;
 enum EventType {
   INSERT = 0,
   REMOVE = 1,
-  REPLACE = 2,
-  MOVE = 3,
-  LOCATIONCHANGE = 4,
-  UNDO = 5,
-  REDO = 6
+  CURSORMOVE = 2,
+  UNDO = 3,
+  REDO = 4
 };
 bool EventType_IsValid(int value);
 const EventType EventType_MIN = INSERT;
@@ -114,59 +112,79 @@ class Event : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required .EventType eventType = 1;
+  // optional .EventType eventType = 1;
   inline bool has_eventtype() const;
   inline void clear_eventtype();
   static const int kEventTypeFieldNumber = 1;
   inline ::EventType eventtype() const;
   inline void set_eventtype(::EventType value);
 
-  // required int32 cursorLocation = 2;
-  inline bool has_cursorlocation() const;
-  inline void clear_cursorlocation();
-  static const int kCursorLocationFieldNumber = 2;
-  inline ::google::protobuf::int32 cursorlocation() const;
-  inline void set_cursorlocation(::google::protobuf::int32 value);
+  // optional int32 initialCursorLocation = 2;
+  inline bool has_initialcursorlocation() const;
+  inline void clear_initialcursorlocation();
+  static const int kInitialCursorLocationFieldNumber = 2;
+  inline ::google::protobuf::int32 initialcursorlocation() const;
+  inline void set_initialcursorlocation(::google::protobuf::int32 value);
 
-  // required int32 changeLength = 3;
+  // optional int32 newCursorLocation = 3;
+  inline bool has_newcursorlocation() const;
+  inline void clear_newcursorlocation();
+  static const int kNewCursorLocationFieldNumber = 3;
+  inline ::google::protobuf::int32 newcursorlocation() const;
+  inline void set_newcursorlocation(::google::protobuf::int32 value);
+
+  // optional int32 changeLength = 4;
   inline bool has_changelength() const;
   inline void clear_changelength();
-  static const int kChangeLengthFieldNumber = 3;
+  static const int kChangeLengthFieldNumber = 4;
   inline ::google::protobuf::int32 changelength() const;
   inline void set_changelength(::google::protobuf::int32 value);
 
-  // optional string user = 4;
-  inline bool has_user() const;
-  inline void clear_user();
-  static const int kUserFieldNumber = 4;
-  inline const ::std::string& user() const;
-  inline void set_user(const ::std::string& value);
-  inline void set_user(const char* value);
-  inline void set_user(const char* value, size_t size);
-  inline ::std::string* mutable_user();
-  inline ::std::string* release_user();
-  inline void set_allocated_user(::std::string* user);
+  // optional string textAdded = 5;
+  inline bool has_textadded() const;
+  inline void clear_textadded();
+  static const int kTextAddedFieldNumber = 5;
+  inline const ::std::string& textadded() const;
+  inline void set_textadded(const ::std::string& value);
+  inline void set_textadded(const char* value);
+  inline void set_textadded(const char* value, size_t size);
+  inline ::std::string* mutable_textadded();
+  inline ::std::string* release_textadded();
+  inline void set_allocated_textadded(::std::string* textadded);
+
+  // optional int64 userID = 6;
+  inline bool has_userid() const;
+  inline void clear_userid();
+  static const int kUserIDFieldNumber = 6;
+  inline ::google::protobuf::int64 userid() const;
+  inline void set_userid(::google::protobuf::int64 value);
 
   // @@protoc_insertion_point(class_scope:Event)
  private:
   inline void set_has_eventtype();
   inline void clear_has_eventtype();
-  inline void set_has_cursorlocation();
-  inline void clear_has_cursorlocation();
+  inline void set_has_initialcursorlocation();
+  inline void clear_has_initialcursorlocation();
+  inline void set_has_newcursorlocation();
+  inline void clear_has_newcursorlocation();
   inline void set_has_changelength();
   inline void clear_has_changelength();
-  inline void set_has_user();
-  inline void clear_has_user();
+  inline void set_has_textadded();
+  inline void clear_has_textadded();
+  inline void set_has_userid();
+  inline void clear_has_userid();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   int eventtype_;
-  ::google::protobuf::int32 cursorlocation_;
-  ::std::string* user_;
+  ::google::protobuf::int32 initialcursorlocation_;
+  ::google::protobuf::int32 newcursorlocation_;
   ::google::protobuf::int32 changelength_;
+  ::std::string* textadded_;
+  ::google::protobuf::int64 userid_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
 
   friend void  protobuf_AddDesc_textevent_2epb();
   friend void protobuf_AssignDesc_textevent_2epb();
@@ -182,7 +200,7 @@ class Event : public ::google::protobuf::Message {
 
 // Event
 
-// required .EventType eventType = 1;
+// optional .EventType eventType = 1;
 inline bool Event::has_eventtype() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -205,37 +223,59 @@ inline void Event::set_eventtype(::EventType value) {
   eventtype_ = value;
 }
 
-// required int32 cursorLocation = 2;
-inline bool Event::has_cursorlocation() const {
+// optional int32 initialCursorLocation = 2;
+inline bool Event::has_initialcursorlocation() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void Event::set_has_cursorlocation() {
+inline void Event::set_has_initialcursorlocation() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void Event::clear_has_cursorlocation() {
+inline void Event::clear_has_initialcursorlocation() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void Event::clear_cursorlocation() {
-  cursorlocation_ = 0;
-  clear_has_cursorlocation();
+inline void Event::clear_initialcursorlocation() {
+  initialcursorlocation_ = 0;
+  clear_has_initialcursorlocation();
 }
-inline ::google::protobuf::int32 Event::cursorlocation() const {
-  return cursorlocation_;
+inline ::google::protobuf::int32 Event::initialcursorlocation() const {
+  return initialcursorlocation_;
 }
-inline void Event::set_cursorlocation(::google::protobuf::int32 value) {
-  set_has_cursorlocation();
-  cursorlocation_ = value;
+inline void Event::set_initialcursorlocation(::google::protobuf::int32 value) {
+  set_has_initialcursorlocation();
+  initialcursorlocation_ = value;
 }
 
-// required int32 changeLength = 3;
-inline bool Event::has_changelength() const {
+// optional int32 newCursorLocation = 3;
+inline bool Event::has_newcursorlocation() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void Event::set_has_changelength() {
+inline void Event::set_has_newcursorlocation() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void Event::clear_has_changelength() {
+inline void Event::clear_has_newcursorlocation() {
   _has_bits_[0] &= ~0x00000004u;
+}
+inline void Event::clear_newcursorlocation() {
+  newcursorlocation_ = 0;
+  clear_has_newcursorlocation();
+}
+inline ::google::protobuf::int32 Event::newcursorlocation() const {
+  return newcursorlocation_;
+}
+inline void Event::set_newcursorlocation(::google::protobuf::int32 value) {
+  set_has_newcursorlocation();
+  newcursorlocation_ = value;
+}
+
+// optional int32 changeLength = 4;
+inline bool Event::has_changelength() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void Event::set_has_changelength() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void Event::clear_has_changelength() {
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline void Event::clear_changelength() {
   changelength_ = 0;
@@ -249,74 +289,96 @@ inline void Event::set_changelength(::google::protobuf::int32 value) {
   changelength_ = value;
 }
 
-// optional string user = 4;
-inline bool Event::has_user() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
+// optional string textAdded = 5;
+inline bool Event::has_textadded() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
 }
-inline void Event::set_has_user() {
-  _has_bits_[0] |= 0x00000008u;
+inline void Event::set_has_textadded() {
+  _has_bits_[0] |= 0x00000010u;
 }
-inline void Event::clear_has_user() {
-  _has_bits_[0] &= ~0x00000008u;
+inline void Event::clear_has_textadded() {
+  _has_bits_[0] &= ~0x00000010u;
 }
-inline void Event::clear_user() {
-  if (user_ != &::google::protobuf::internal::kEmptyString) {
-    user_->clear();
+inline void Event::clear_textadded() {
+  if (textadded_ != &::google::protobuf::internal::kEmptyString) {
+    textadded_->clear();
   }
-  clear_has_user();
+  clear_has_textadded();
 }
-inline const ::std::string& Event::user() const {
-  return *user_;
+inline const ::std::string& Event::textadded() const {
+  return *textadded_;
 }
-inline void Event::set_user(const ::std::string& value) {
-  set_has_user();
-  if (user_ == &::google::protobuf::internal::kEmptyString) {
-    user_ = new ::std::string;
+inline void Event::set_textadded(const ::std::string& value) {
+  set_has_textadded();
+  if (textadded_ == &::google::protobuf::internal::kEmptyString) {
+    textadded_ = new ::std::string;
   }
-  user_->assign(value);
+  textadded_->assign(value);
 }
-inline void Event::set_user(const char* value) {
-  set_has_user();
-  if (user_ == &::google::protobuf::internal::kEmptyString) {
-    user_ = new ::std::string;
+inline void Event::set_textadded(const char* value) {
+  set_has_textadded();
+  if (textadded_ == &::google::protobuf::internal::kEmptyString) {
+    textadded_ = new ::std::string;
   }
-  user_->assign(value);
+  textadded_->assign(value);
 }
-inline void Event::set_user(const char* value, size_t size) {
-  set_has_user();
-  if (user_ == &::google::protobuf::internal::kEmptyString) {
-    user_ = new ::std::string;
+inline void Event::set_textadded(const char* value, size_t size) {
+  set_has_textadded();
+  if (textadded_ == &::google::protobuf::internal::kEmptyString) {
+    textadded_ = new ::std::string;
   }
-  user_->assign(reinterpret_cast<const char*>(value), size);
+  textadded_->assign(reinterpret_cast<const char*>(value), size);
 }
-inline ::std::string* Event::mutable_user() {
-  set_has_user();
-  if (user_ == &::google::protobuf::internal::kEmptyString) {
-    user_ = new ::std::string;
+inline ::std::string* Event::mutable_textadded() {
+  set_has_textadded();
+  if (textadded_ == &::google::protobuf::internal::kEmptyString) {
+    textadded_ = new ::std::string;
   }
-  return user_;
+  return textadded_;
 }
-inline ::std::string* Event::release_user() {
-  clear_has_user();
-  if (user_ == &::google::protobuf::internal::kEmptyString) {
+inline ::std::string* Event::release_textadded() {
+  clear_has_textadded();
+  if (textadded_ == &::google::protobuf::internal::kEmptyString) {
     return NULL;
   } else {
-    ::std::string* temp = user_;
-    user_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    ::std::string* temp = textadded_;
+    textadded_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
     return temp;
   }
 }
-inline void Event::set_allocated_user(::std::string* user) {
-  if (user_ != &::google::protobuf::internal::kEmptyString) {
-    delete user_;
+inline void Event::set_allocated_textadded(::std::string* textadded) {
+  if (textadded_ != &::google::protobuf::internal::kEmptyString) {
+    delete textadded_;
   }
-  if (user) {
-    set_has_user();
-    user_ = user;
+  if (textadded) {
+    set_has_textadded();
+    textadded_ = textadded;
   } else {
-    clear_has_user();
-    user_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    clear_has_textadded();
+    textadded_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   }
+}
+
+// optional int64 userID = 6;
+inline bool Event::has_userid() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void Event::set_has_userid() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void Event::clear_has_userid() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void Event::clear_userid() {
+  userid_ = GOOGLE_LONGLONG(0);
+  clear_has_userid();
+}
+inline ::google::protobuf::int64 Event::userid() const {
+  return userid_;
+}
+inline void Event::set_userid(::google::protobuf::int64 value) {
+  set_has_userid();
+  userid_ = value;
 }
 
 
