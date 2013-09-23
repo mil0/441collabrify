@@ -14,6 +14,8 @@
     NSString * initialText;
     NSTimer * eventDelay;
     CollabrifyClient * client;
+    
+    int64_t * participationID;
 }
 
 

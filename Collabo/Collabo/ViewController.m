@@ -19,6 +19,10 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    //turning autocorrection / auto-cap off
+    _textView.autocorrectionType = UITextAutocorrectionTypeNo;
+    _textView.autocapitalizationType = UITextAutocapitalizationTypeNone;
 
 
 }
@@ -43,6 +47,7 @@
     [eventDelay invalidate]; eventDelay = nil;
     //make new timer, after 1.5sec user has stopped typing
     //register change
+    
     NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
     [dict setObject:text forKey:@"text"];
     [dict setObject:NSStringFromRange(range) forKey:@"range"];
@@ -78,6 +83,7 @@
 }
 
 - (IBAction)undo:(id)sender {
+    
     [self.textView.undoManager undo];
     NSLog(@"undo");
 }
