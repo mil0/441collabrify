@@ -33,11 +33,13 @@ void protobuf_AssignDesc_textevent_2epb() {
       "textevent.pb");
   GOOGLE_CHECK(file != NULL);
   Event_descriptor_ = file->message_type(0);
-  static const int Event_offsets_[4] = {
+  static const int Event_offsets_[6] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Event, eventtype_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Event, cursorlocation_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Event, initialcursorlocation_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Event, newcursorlocation_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Event, changelength_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Event, user_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Event, textadded_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Event, userid_),
   };
   Event_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -81,12 +83,13 @@ void protobuf_AddDesc_textevent_2epb() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\014textevent.pb\"b\n\005Event\022\035\n\teventType\030\001 \002"
-    "(\0162\n.EventType\022\026\n\016cursorLocation\030\002 \002(\005\022\024"
-    "\n\014changeLength\030\003 \002(\005\022\014\n\004user\030\004 \001(\t*b\n\tEv"
-    "entType\022\n\n\006INSERT\020\000\022\n\n\006REMOVE\020\001\022\013\n\007REPLA"
-    "CE\020\002\022\010\n\004MOVE\020\003\022\022\n\016LOCATIONCHANGE\020\004\022\010\n\004UN"
-    "DO\020\005\022\010\n\004REDO\020\006", 214);
+    "\n\014textevent.pb\"\231\001\n\005Event\022\035\n\teventType\030\001 "
+    "\001(\0162\n.EventType\022\035\n\025initialCursorLocation"
+    "\030\002 \001(\005\022\031\n\021newCursorLocation\030\003 \001(\005\022\024\n\014cha"
+    "ngeLength\030\004 \001(\005\022\021\n\ttextAdded\030\005 \001(\t\022\016\n\006us"
+    "erID\030\006 \001(\003*G\n\tEventType\022\n\n\006INSERT\020\000\022\n\n\006R"
+    "EMOVE\020\001\022\016\n\nCURSORMOVE\020\002\022\010\n\004UNDO\020\003\022\010\n\004RED"
+    "O\020\004", 243);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "textevent.pb", &protobuf_RegisterTypes);
   Event::default_instance_ = new Event();
@@ -111,8 +114,6 @@ bool EventType_IsValid(int value) {
     case 2:
     case 3:
     case 4:
-    case 5:
-    case 6:
       return true;
     default:
       return false;
@@ -124,9 +125,11 @@ bool EventType_IsValid(int value) {
 
 #ifndef _MSC_VER
 const int Event::kEventTypeFieldNumber;
-const int Event::kCursorLocationFieldNumber;
+const int Event::kInitialCursorLocationFieldNumber;
+const int Event::kNewCursorLocationFieldNumber;
 const int Event::kChangeLengthFieldNumber;
-const int Event::kUserFieldNumber;
+const int Event::kTextAddedFieldNumber;
+const int Event::kUserIDFieldNumber;
 #endif  // !_MSC_VER
 
 Event::Event()
@@ -146,9 +149,11 @@ Event::Event(const Event& from)
 void Event::SharedCtor() {
   _cached_size_ = 0;
   eventtype_ = 0;
-  cursorlocation_ = 0;
+  initialcursorlocation_ = 0;
+  newcursorlocation_ = 0;
   changelength_ = 0;
-  user_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  textadded_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  userid_ = GOOGLE_LONGLONG(0);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -157,8 +162,8 @@ Event::~Event() {
 }
 
 void Event::SharedDtor() {
-  if (user_ != &::google::protobuf::internal::kEmptyString) {
-    delete user_;
+  if (textadded_ != &::google::protobuf::internal::kEmptyString) {
+    delete textadded_;
   }
   if (this != default_instance_) {
   }
@@ -188,13 +193,15 @@ Event* Event::New() const {
 void Event::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     eventtype_ = 0;
-    cursorlocation_ = 0;
+    initialcursorlocation_ = 0;
+    newcursorlocation_ = 0;
     changelength_ = 0;
-    if (has_user()) {
-      if (user_ != &::google::protobuf::internal::kEmptyString) {
-        user_->clear();
+    if (has_textadded()) {
+      if (textadded_ != &::google::protobuf::internal::kEmptyString) {
+        textadded_->clear();
       }
     }
+    userid_ = GOOGLE_LONGLONG(0);
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -206,7 +213,7 @@ bool Event::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required .EventType eventType = 1;
+      // optional .EventType eventType = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
@@ -222,28 +229,44 @@ bool Event::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(16)) goto parse_cursorLocation;
+        if (input->ExpectTag(16)) goto parse_initialCursorLocation;
         break;
       }
 
-      // required int32 cursorLocation = 2;
+      // optional int32 initialCursorLocation = 2;
       case 2: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_cursorLocation:
+         parse_initialCursorLocation:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &cursorlocation_)));
-          set_has_cursorlocation();
+                 input, &initialcursorlocation_)));
+          set_has_initialcursorlocation();
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(24)) goto parse_changeLength;
+        if (input->ExpectTag(24)) goto parse_newCursorLocation;
         break;
       }
 
-      // required int32 changeLength = 3;
+      // optional int32 newCursorLocation = 3;
       case 3: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_newCursorLocation:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &newcursorlocation_)));
+          set_has_newcursorlocation();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(32)) goto parse_changeLength;
+        break;
+      }
+
+      // optional int32 changeLength = 4;
+      case 4: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_changeLength:
@@ -254,20 +277,36 @@ bool Event::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(34)) goto parse_user;
+        if (input->ExpectTag(42)) goto parse_textAdded;
         break;
       }
 
-      // optional string user = 4;
-      case 4: {
+      // optional string textAdded = 5;
+      case 5: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_user:
+         parse_textAdded:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_user()));
+                input, this->mutable_textadded()));
           ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->user().data(), this->user().length(),
+            this->textadded().data(), this->textadded().length(),
             ::google::protobuf::internal::WireFormat::PARSE);
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(48)) goto parse_userID;
+        break;
+      }
+
+      // optional int64 userID = 6;
+      case 6: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_userID:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+                 input, &userid_)));
+          set_has_userid();
         } else {
           goto handle_uninterpreted;
         }
@@ -293,29 +332,39 @@ bool Event::MergePartialFromCodedStream(
 
 void Event::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // required .EventType eventType = 1;
+  // optional .EventType eventType = 1;
   if (has_eventtype()) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
       1, this->eventtype(), output);
   }
 
-  // required int32 cursorLocation = 2;
-  if (has_cursorlocation()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->cursorlocation(), output);
+  // optional int32 initialCursorLocation = 2;
+  if (has_initialcursorlocation()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->initialcursorlocation(), output);
   }
 
-  // required int32 changeLength = 3;
+  // optional int32 newCursorLocation = 3;
+  if (has_newcursorlocation()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->newcursorlocation(), output);
+  }
+
+  // optional int32 changeLength = 4;
   if (has_changelength()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->changelength(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->changelength(), output);
   }
 
-  // optional string user = 4;
-  if (has_user()) {
+  // optional string textAdded = 5;
+  if (has_textadded()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->user().data(), this->user().length(),
+      this->textadded().data(), this->textadded().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
-      4, this->user(), output);
+      5, this->textadded(), output);
+  }
+
+  // optional int64 userID = 6;
+  if (has_userid()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(6, this->userid(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -326,30 +375,40 @@ void Event::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* Event::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required .EventType eventType = 1;
+  // optional .EventType eventType = 1;
   if (has_eventtype()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
       1, this->eventtype(), target);
   }
 
-  // required int32 cursorLocation = 2;
-  if (has_cursorlocation()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->cursorlocation(), target);
+  // optional int32 initialCursorLocation = 2;
+  if (has_initialcursorlocation()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->initialcursorlocation(), target);
   }
 
-  // required int32 changeLength = 3;
+  // optional int32 newCursorLocation = 3;
+  if (has_newcursorlocation()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->newcursorlocation(), target);
+  }
+
+  // optional int32 changeLength = 4;
   if (has_changelength()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->changelength(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->changelength(), target);
   }
 
-  // optional string user = 4;
-  if (has_user()) {
+  // optional string textAdded = 5;
+  if (has_textadded()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->user().data(), this->user().length(),
+      this->textadded().data(), this->textadded().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        4, this->user(), target);
+        5, this->textadded(), target);
+  }
+
+  // optional int64 userID = 6;
+  if (has_userid()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(6, this->userid(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -363,31 +422,45 @@ int Event::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required .EventType eventType = 1;
+    // optional .EventType eventType = 1;
     if (has_eventtype()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::EnumSize(this->eventtype());
     }
 
-    // required int32 cursorLocation = 2;
-    if (has_cursorlocation()) {
+    // optional int32 initialCursorLocation = 2;
+    if (has_initialcursorlocation()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->cursorlocation());
+          this->initialcursorlocation());
     }
 
-    // required int32 changeLength = 3;
+    // optional int32 newCursorLocation = 3;
+    if (has_newcursorlocation()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->newcursorlocation());
+    }
+
+    // optional int32 changeLength = 4;
     if (has_changelength()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->changelength());
     }
 
-    // optional string user = 4;
-    if (has_user()) {
+    // optional string textAdded = 5;
+    if (has_textadded()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->user());
+          this->textadded());
+    }
+
+    // optional int64 userID = 6;
+    if (has_userid()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
+          this->userid());
     }
 
   }
@@ -420,14 +493,20 @@ void Event::MergeFrom(const Event& from) {
     if (from.has_eventtype()) {
       set_eventtype(from.eventtype());
     }
-    if (from.has_cursorlocation()) {
-      set_cursorlocation(from.cursorlocation());
+    if (from.has_initialcursorlocation()) {
+      set_initialcursorlocation(from.initialcursorlocation());
+    }
+    if (from.has_newcursorlocation()) {
+      set_newcursorlocation(from.newcursorlocation());
     }
     if (from.has_changelength()) {
       set_changelength(from.changelength());
     }
-    if (from.has_user()) {
-      set_user(from.user());
+    if (from.has_textadded()) {
+      set_textadded(from.textadded());
+    }
+    if (from.has_userid()) {
+      set_userid(from.userid());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
@@ -446,7 +525,6 @@ void Event::CopyFrom(const Event& from) {
 }
 
 bool Event::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
 
   return true;
 }
@@ -454,9 +532,11 @@ bool Event::IsInitialized() const {
 void Event::Swap(Event* other) {
   if (other != this) {
     std::swap(eventtype_, other->eventtype_);
-    std::swap(cursorlocation_, other->cursorlocation_);
+    std::swap(initialcursorlocation_, other->initialcursorlocation_);
+    std::swap(newcursorlocation_, other->newcursorlocation_);
     std::swap(changelength_, other->changelength_);
-    std::swap(user_, other->user_);
+    std::swap(textadded_, other->textadded_);
+    std::swap(userid_, other->userid_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

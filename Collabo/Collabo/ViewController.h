@@ -10,8 +10,8 @@
 #import <Collabrify/Collabrify.h>
 
 @interface ViewController : UIViewController <UITextViewDelegate>{
-    NSString * tempChange;
-    NSString * initialText;
+    NSMutableString * tempChange;
+    NSMutableString * deleteString;
     NSTimer * eventDelay;
     CollabrifyClient * client;
     
@@ -27,8 +27,6 @@
 
 - (void) connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
-
-@property NSString * initialText;
 
 @end
 

@@ -11,8 +11,6 @@
 		12801D6017ECEF5B009979B9 /* CreateSessionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 12801D5F17ECEF5B009979B9 /* CreateSessionViewController.m */; };
 		12801D6317ECEF8D009979B9 /* JoinSessionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 12801D6217ECEF8D009979B9 /* JoinSessionViewController.m */; };
 		12801D6617ECF10A009979B9 /* MainMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 12801D6517ECF10A009979B9 /* MainMenu.m */; };
-		26056CCB17E28034005A8312 /* EventMessage.mm in Sources */ = {isa = PBXBuildFile; fileRef = 26056CCA17E28034005A8312 /* EventMessage.mm */; };
-		26056CCE17E280DB005A8312 /* textevent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 26056CCC17E280DB005A8312 /* textevent.cpp */; };
 		26056CD417E653ED005A8312 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 26056CD217E653D7005A8312 /* libstdc++.dylib */; };
 		26056CD617E653FC005A8312 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26056CD517E653FC005A8312 /* QuartzCore.framework */; };
 		2607D78317DA73F0009421F9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2607D78217DA73F0009421F9 /* UIKit.framework */; };
@@ -69,6 +67,8 @@
 		2607D83C17DA7450009421F9 /* wire_format_lite.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2607D81917DA7450009421F9 /* wire_format_lite.cc */; };
 		2607D83F17DA74EC009421F9 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2607D83E17DA74EC009421F9 /* SystemConfiguration.framework */; };
 		2607D84117DA74F5009421F9 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2607D84017DA74F5009421F9 /* libz.dylib */; };
+		26BBBE3E17F0F44100AF26DA /* textevent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 26BBBE3C17F0F44100AF26DA /* textevent.cpp */; };
+		26BBBE4117F0F4B600AF26DA /* EventMessage.mm in Sources */ = {isa = PBXBuildFile; fileRef = 26BBBE4017F0F4B600AF26DA /* EventMessage.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,10 +90,6 @@
 		12801D6217ECEF8D009979B9 /* JoinSessionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JoinSessionViewController.m; sourceTree = "<group>"; };
 		12801D6417ECF10A009979B9 /* MainMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenu.h; sourceTree = "<group>"; };
 		12801D6517ECF10A009979B9 /* MainMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainMenu.m; sourceTree = "<group>"; };
-		26056CC917E28034005A8312 /* EventMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventMessage.h; sourceTree = "<group>"; };
-		26056CCA17E28034005A8312 /* EventMessage.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EventMessage.mm; sourceTree = "<group>"; };
-		26056CCC17E280DB005A8312 /* textevent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = textevent.cpp; sourceTree = "<group>"; };
-		26056CCD17E280DB005A8312 /* textevent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = textevent.h; sourceTree = "<group>"; };
 		26056CD217E653D7005A8312 /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
 		26056CD517E653FC005A8312 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		2607D77F17DA73F0009421F9 /* Collabo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Collabo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -206,6 +202,10 @@
 		2607D83D17DA7473009421F9 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
 		2607D83E17DA74EC009421F9 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		2607D84017DA74F5009421F9 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		26BBBE3C17F0F44100AF26DA /* textevent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = textevent.cpp; sourceTree = "<group>"; };
+		26BBBE3D17F0F44100AF26DA /* textevent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = textevent.h; sourceTree = "<group>"; };
+		26BBBE3F17F0F4B600AF26DA /* EventMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventMessage.h; sourceTree = "<group>"; };
+		26BBBE4017F0F4B600AF26DA /* EventMessage.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EventMessage.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -242,10 +242,6 @@
 			children = (
 				26056CD517E653FC005A8312 /* QuartzCore.framework */,
 				26056CD217E653D7005A8312 /* libstdc++.dylib */,
-				26056CCC17E280DB005A8312 /* textevent.cpp */,
-				26056CCD17E280DB005A8312 /* textevent.h */,
-				26056CC917E28034005A8312 /* EventMessage.h */,
-				26056CCA17E28034005A8312 /* EventMessage.mm */,
 				2607D84017DA74F5009421F9 /* libz.dylib */,
 				2607D83E17DA74EC009421F9 /* SystemConfiguration.framework */,
 				2607D83D17DA7473009421F9 /* config.h */,
@@ -282,6 +278,8 @@
 		2607D78817DA73F0009421F9 /* Collabo */ = {
 			isa = PBXGroup;
 			children = (
+				26BBBE3C17F0F44100AF26DA /* textevent.cpp */,
+				26BBBE3D17F0F44100AF26DA /* textevent.h */,
 				2607D79117DA73F0009421F9 /* AppDelegate.h */,
 				2607D79217DA73F0009421F9 /* AppDelegate.m */,
 				12801D6417ECF10A009979B9 /* MainMenu.h */,
@@ -297,6 +295,8 @@
 				12801D5B17ECEE5A009979B9 /* SessionViewController.h */,
 				12801D5C17ECEE5A009979B9 /* SessionViewController.m */,
 				2607D78917DA73F0009421F9 /* Supporting Files */,
+				26BBBE3F17F0F4B600AF26DA /* EventMessage.h */,
+				26BBBE4017F0F4B600AF26DA /* EventMessage.mm */,
 			);
 			path = Collabo;
 			sourceTree = "<group>";
@@ -611,12 +611,12 @@
 				2607D83A17DA7450009421F9 /* unknown_field_set.cc in Sources */,
 				2607D83B17DA7450009421F9 /* wire_format.cc in Sources */,
 				2607D83C17DA7450009421F9 /* wire_format_lite.cc in Sources */,
-				26056CCB17E28034005A8312 /* EventMessage.mm in Sources */,
-				26056CCE17E280DB005A8312 /* textevent.cpp in Sources */,
 				12801D5D17ECEE5A009979B9 /* SessionViewController.m in Sources */,
 				12801D6017ECEF5B009979B9 /* CreateSessionViewController.m in Sources */,
 				12801D6317ECEF8D009979B9 /* JoinSessionViewController.m in Sources */,
 				12801D6617ECF10A009979B9 /* MainMenu.m in Sources */,
+				26BBBE3E17F0F44100AF26DA /* textevent.cpp in Sources */,
+				26BBBE4117F0F4B600AF26DA /* EventMessage.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
