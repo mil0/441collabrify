@@ -18,7 +18,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    tempChange = [[NSMutableString alloc] init];
+    currentEventString = [[NSMutableString alloc] init];
     deleteString = [[NSMutableString alloc] init];
     //turning autocorrection / auto-cap off
     _textView.autocorrectionType = UITextAutocorrectionTypeNo;
@@ -56,45 +56,63 @@
     //get cursor
     NSUInteger cursorPosition = textView.selectedRange.location;
     // NSLog([NSString stringWithFormat:@"Cursor Position: %d", cursorPosition]);
-    if (range.length == 0) {
-        //insertions
-        char appendedChar = [text characterAtIndex:0];
-        [tempChange appendFormat:@"%c", appendedChar];
-        
-    }
-    else if (range.length == 1){
-        //deletion
-        NSLog(@"delete");
-        
-    }
-    
     
     [eventDelay invalidate]; eventDelay = nil;
     //make new timer, after 1.5sec user has stopped typing
     //register change
     
-    eventDelay = [NSTimer scheduledTimerWithTimeInterval:1.5
+    eventDelay = [NSTimer scheduledTimerWithTimeInterval:0.5
                                                   target:self
-                                                selector:@selector(eventDelayFire:)
+                                                selector:@selector(broadcastEvent:)
                                                 userInfo:nil
                                                  repeats:NO];
+    
+    
+    if (range.length == 0) {
+        //fire off delete event if it exists
+    
+        //insertions
+        char appendedChar = [text characterAtIndex:0];
+        [currentEventString appendFormat:@"%c", appendedChar];
+    }
+    else if (range.length == 1){
+        //deletion
+        NSLog(@"delete");
+        char deletedChar = [[_textView text] characterAtIndex:cursorPosition-2];
+        [deleteString appendString:[NSString stringWithFormat:@"%c", deletedChar]];
+        NSLog(@"%@", deleteString);
+
+    }else if(cursorPosition == 0){
+        return NO;
+    }
+    
     return YES;
 }
 
+- (void)client:(CollabrifyClient *)client receivedEventWithOrderID:(int64_t)orderID submissionRegistrationID:(int32_t)submissionRegistrationID eventType:(NSString *)eventType data:(NSData *)data{
+    
+    NSString * string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    if (string) {
+        NSLog(string);
+        dispatch_async(dispatch_get_main_queue(), ^(void){});
+    }
+}
 
 // called when text view changes
 // sets up timer to wait until user has stopped typing for 1.5 seconds,
 // then calles eventDelayFire to fire event
 - (void)textViewDidChange:(UITextView *)textView
 {
+    
 }
 
 //detect change from previous document content
--(void)eventDelayFire:(NSTimer *)t{
+-(void)broadcastEvent:(NSTimer *)t{
     assert(t == eventDelay);
-    NSLog(@"Event Fired:");
-    NSLog(@"%@", tempChange);
-    [tempChange setString:@""];
+    NSLog(@"Event Fired due to delay");
+    [client broadcast:[currentEvent serializeEvent] eventType:@"INSERT"];
+
+    NSLog(@"%@", currentEventString);
 }
 
 
@@ -118,36 +136,9 @@
     NSLog(@"redo");
 }
 
-- (void) connection:(NSURLConnection *)connection didReceiveResponse:
-
-
-    (NSURLResponse *)response{
-    /*
-    NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)response;
-    int code = [httpResponse statusCode];
-    NSString *str;
-    NSMutableString *myString = [NSMutableString string];
-    str = [NSString stringWithFormat:@"%d", code];
-    [myString appendString:str];
-    NSLog(myString);
-        */
-}
-
 - (IBAction)create:(id)sender {
     // Do any additional setup after loading the view, typically from a nib.
-    /*
-    NSURL *url = [NSURL URLWithString:@"http:\\collabrify-cloud.appspot.com/request"];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLCacheStorageNotAllowed timeoutInterval:3.0];
-    [request setHTTPMethod:@"POST"];
-    [request setValue:@"text/html" forHTTPHeaderField:@"Content-Type"];
-    [request setHTTPBody:nil];
-    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-    [connection start];
-    if (connection) {
-        NSLog(@"done");
-    }
-    
-    */
+
     NSString * name_tag = @"hello6";
     NSString * password_test = @"hello";
     
@@ -272,6 +263,7 @@
          
      }];
 }
+
 
 
 @end

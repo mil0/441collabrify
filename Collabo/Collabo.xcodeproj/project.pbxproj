@@ -24,7 +24,7 @@
 		2607D79917DA73F0009421F9 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2607D79817DA73F0009421F9 /* Default-568h@2x.png */; };
 		2607D79C17DA73F0009421F9 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2607D79A17DA73F0009421F9 /* MainStoryboard_iPhone.storyboard */; };
 		2607D79F17DA73F0009421F9 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2607D79D17DA73F0009421F9 /* MainStoryboard_iPad.storyboard */; };
-		2607D7A217DA73F0009421F9 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2607D7A117DA73F0009421F9 /* ViewController.m */; };
+		2607D7A217DA73F0009421F9 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2607D7A117DA73F0009421F9 /* ViewController.mm */; };
 		2607D7AA17DA73F0009421F9 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2607D7A917DA73F0009421F9 /* SenTestingKit.framework */; };
 		2607D7AB17DA73F0009421F9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2607D78217DA73F0009421F9 /* UIKit.framework */; };
 		2607D7AC17DA73F0009421F9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2607D78417DA73F0009421F9 /* Foundation.framework */; };
@@ -108,7 +108,7 @@
 		2607D79B17DA73F0009421F9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		2607D79E17DA73F0009421F9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
 		2607D7A017DA73F0009421F9 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		2607D7A117DA73F0009421F9 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		2607D7A117DA73F0009421F9 /* ViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
 		2607D7A817DA73F0009421F9 /* CollaboTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CollaboTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2607D7A917DA73F0009421F9 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		2607D7B117DA73F0009421F9 /* CollaboTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CollaboTests-Info.plist"; sourceTree = "<group>"; };
@@ -291,7 +291,7 @@
 				2607D7A017DA73F0009421F9 /* ViewController.h */,
 				12801D5E17ECEF5B009979B9 /* CreateSessionViewController.h */,
 				12801D5F17ECEF5B009979B9 /* CreateSessionViewController.m */,
-				2607D7A117DA73F0009421F9 /* ViewController.m */,
+				2607D7A117DA73F0009421F9 /* ViewController.mm */,
 				12801D5B17ECEE5A009979B9 /* SessionViewController.h */,
 				12801D5C17ECEE5A009979B9 /* SessionViewController.m */,
 				2607D78917DA73F0009421F9 /* Supporting Files */,
@@ -577,7 +577,7 @@
 			files = (
 				2607D78F17DA73F0009421F9 /* main.m in Sources */,
 				2607D79317DA73F0009421F9 /* AppDelegate.m in Sources */,
-				2607D7A217DA73F0009421F9 /* ViewController.m in Sources */,
+				2607D7A217DA73F0009421F9 /* ViewController.mm in Sources */,
 				2607D81C17DA7450009421F9 /* descriptor.cc in Sources */,
 				2607D81D17DA7450009421F9 /* descriptor.pb.cc in Sources */,
 				2607D81E17DA7450009421F9 /* descriptor_database.cc in Sources */,
