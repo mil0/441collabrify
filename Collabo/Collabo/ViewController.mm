@@ -58,10 +58,10 @@
     // NSLog([NSString stringWithFormat:@"Cursor Position: %d", cursorPosition]);
     
     [eventDelay invalidate]; eventDelay = nil;
-    //make new timer, after 1.5sec user has stopped typing
+    //make new timer, after 0.5sec user has stopped typing
     //register change
     
-    eventDelay = [NSTimer scheduledTimerWithTimeInterval:0.5
+    eventDelay = [NSTimer scheduledTimerWithTimeInterval:20000
                                                   target:self
                                                 selector:@selector(broadcastEvent:)
                                                 userInfo:nil
@@ -72,15 +72,21 @@
         //if you were deleting, you aren't anymore, so make discrete event
         if (currentEvent->event->eventtype() == REMOVE) {
             [self broadcastEvent:eventDelay];
+            currentEvent->event->set_eventtype(INSERT);
         }
         char appendedChar = [text characterAtIndex:0];
         [currentEventString appendFormat:@"%c", appendedChar];
     }
     else if (range.length == 1){
-        //deletion
-        NSLog(@"delete");
+        if (currentEvent->event->eventtype() == INSERT) {
+            [self broadcastEvent:eventDelay];
+            currentEvent->event->set_eventtype(REMOVE);
+        }
         char deletedChar = [[_textView text] characterAtIndex:cursorPosition-2];
-        
+        [currentEventString appendFormat:@"%c", deletedChar];
+        //deletion
+        NSLog(@"deleted");
+        NSLog(currentEventString);
     }
     else if(cursorPosition == 0){
         return NO;
@@ -100,27 +106,15 @@
     }
 }
 
-// called when text view changes
-// sets up timer to wait until user has stopped typing for 1.5 seconds,
-// then calles eventDelayFire to fire event
-- (void)textViewDidChange:(UITextView *)textView
-{
-    
-}
-
-
-
-//detect change from previous document content
+//broadcast event, add to appropriate stack
 -(void)broadcastEvent:(NSTimer *)t{
     assert(t == eventDelay);
-    NSLog(@"Event Fired due to delay");
+    NSLog(@"Event Fired");
     [client broadcast:[currentEvent serializeEvent] eventType:@"INSERT"];
 
     NSLog(@"%@", currentEventString);
+    currentEventString = [[NSMutableString alloc] init];
 }
-
-
-
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     NSLog(@"touchesBegan:withEvent:");
