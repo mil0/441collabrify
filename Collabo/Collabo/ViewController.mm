@@ -226,7 +226,7 @@
     //JOIN SESSION;
     NSString * password_test = @"hello";
     bool startpause_test = TRUE;
-    int64_t sessionID_test = 2291098;
+    int64_t sessionID_test = 2402002;
     
     [client joinSessionWithID:sessionID_test
                       password:password_test
