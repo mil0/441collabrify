@@ -67,16 +67,9 @@
     
     NSLog(@"Cursor Position before action: %d", cursorPosition);
     NSLog(@"range.length before action: %d", range.length);
-    
-    if (cursorPosition == 0 && range.length == 0) {
-        NSLog(@"DELETE FROM 0");
-    }
-    
-    //Insertion
-    else if (range.length == 0) {
-        //if you were deleting, you aren't anymore, so make discrete event
-        if (currentEvent->event->eventtype() == REMOVE) {
-            [self broadcastEvent:eventDelay];
+    if ([text isEqualToString:@""]){
+        if (cursorPosition == 0 && range.length == 0) {
+            return NO;
         }
         if (currentEvent->event->eventtype() == INSERT) {
             [self broadcastEvent:eventDelay];
@@ -155,7 +148,7 @@
 - (IBAction)create:(id)sender {
     // Do any additional setup after loading the view, typically from a nib.
 
-    NSString * name_tag = @"hello6";
+    NSString * name_tag = @"hello";
     NSString * password_test = @"hello";
     
     NSString *test_name = @"CREATOR";
@@ -219,6 +212,8 @@
     NSString *test = @"JOINER";
     NSError *error;
     
+
+    
     client = [[CollabrifyClient alloc] initWithGmail:test
                                          displayName:test
                                         accountGmail:@"441fall2013@umich.edu"
@@ -226,14 +221,12 @@
                                       getLatestEvent:NO
                                                error:&error];
     
-    
     [client setDelegate:self];
-
     
     //JOIN SESSION;
     NSString * password_test = @"hello";
     bool startpause_test = TRUE;
-    int64_t sessionID_test = 2402002;
+    int64_t sessionID_test = 2429002;
     [client joinSessionWithID:sessionID_test
                       password:password_test
                    startPaused:startpause_test
