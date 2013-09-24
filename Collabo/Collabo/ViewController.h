@@ -37,8 +37,23 @@
 //NSData *dataForMessage(::google::protobuf::Message &message);
 //NSData *parseDelimitedMessageFromData(::google::protobuf::Message &message, NSData *data);
 
+//CollabrifyDataSource Methods
+
+/**
+ * Return the data offset by baseFilSize or nil if the size matches your base file's size
+ *
+ * @param client The client requesting the data source for a base file chunk.
+ * @param baseFileSize The current size of the base file that has been uploaded
+ * @return The base file chunk that the data source wants uploaded.
+ * @warning Never returning nil from this method can result in an invite loop of uploading data and
+ * receiving a request to continue uploading.
+ * @warning Data is not requested on the main thread.
+ */
+- (NSData *)client:(CollabrifyClient *)client requestsBaseFileChunkForCurrentBaseFileSize:(NSInteger)baseFileSize;
 
 
+
+//CollabrifyClientDelegate Methods
 
 /**
  * Receive data from the session along with its orderID. Decode the data in an app-specific way

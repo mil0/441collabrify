@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 
-@interface ViewController () <CollabrifyClientDelegate, CollabrifyClientDataSource>
+@interface ViewController () <UITextViewDelegate, CollabrifyClientDelegate, CollabrifyClientDataSource>
     
 @end
 
@@ -32,7 +32,7 @@
     
 }
 - (void)client:(CollabrifyClient *)client encounteredError:(CollabrifyError *)error{
-    NSLog(@"%", error);
+    NSLog(@"Error received: %@", error);
 }
 
 
@@ -111,7 +111,7 @@
 
     NSString * string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     if (string) {
-        NSLog(string);
+        NSLog(@"String received %@", string);
         dispatch_async(dispatch_get_main_queue(), ^(void){
             //do stuff with string
         });
@@ -123,9 +123,9 @@
     assert(t == eventDelay);
     NSLog(@"Event Fired");
     [currentEvent initWithType:currentEvent->event->eventtype() CursorLocation:cursorLocation Length:[currentEventString length] Text:currentEventString id:participationID];
-    [client broadcast:[currentEvent serializeEvent] eventType:@"INSERT"];
-    
-    NSLog(@"%@", currentEventString);
+    int32_t success = [client broadcast:[currentEvent serializeEvent] eventType:@"INSERT"];
+    NSLog([NSString stringWithFormat:@"Error Code: %d", success]);
+    NSLog(@"Current Event String: %@", currentEventString);
     currentEventString = [[NSMutableString alloc] init];
 }
 
@@ -225,7 +225,7 @@
     //JOIN SESSION;
     NSString * password_test = @"hello";
     bool startpause_test = TRUE;
-    int64_t sessionID_test = 2291098;
+    int64_t sessionID_test = 2402002;
     
     [client joinSessionWithID:sessionID_test
                       password:password_test
