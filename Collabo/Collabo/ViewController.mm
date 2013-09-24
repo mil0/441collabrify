@@ -234,7 +234,7 @@
                  
                  if (!error) {
                      NSLog(@"join completed");
-                     
+                     NSLog(@"Delegate: %@", [client delegate]);
                      bool test2 = [client isInSession];
                      
                      
