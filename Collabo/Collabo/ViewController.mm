@@ -180,11 +180,10 @@
                         
                         
                         if (test2) {
-                            NSLog(@"is in session, and SESSION ID IS:");
                             int64_t session_ID = [client currentSessionID];
-                            NSLog([NSString stringWithFormat:@"%lld", session_ID]);
+                            NSLog([NSString stringWithFormat:@"Session ID: %lld", session_ID]);
                             participationID = [client participantID]; // setting participation ID
-                            NSLog([NSString stringWithFormat:@"%lld", participationID]);
+                            NSLog([NSString stringWithFormat:@"Participation ID: %lld", participationID]);
                             
                             
                         }
