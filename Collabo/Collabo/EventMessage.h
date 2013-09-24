@@ -18,7 +18,5 @@
 -(BOOL) initWithType:(EventType)type CursorLocation:(int)location Length:(int)length Text:(NSString *)text
                   id:(::google::protobuf::int64_t)user_id;
 -(NSData *) serializeEvent;
-NSData *dataForMessage(::google::protobuf::Message &message);
-NSData *parseDelimitedMessageFromData(::google::protobuf::Message &message, NSData *data);
 
 @end
