@@ -71,7 +71,7 @@
     NSLog(@"range.length before action: %d", range.length);
     
     if (cursorPosition == 0 && range.length == 0) {
-        
+        NSLog(@"DELETE FROM 0");
     }
     
     //Insertion
@@ -122,11 +122,15 @@
 -(void)broadcastEvent:(NSTimer *)t{
     assert(t == eventDelay);
     NSLog(@"Event Fired");
+    NSError *error;
     [currentEvent initWithType:currentEvent->event->eventtype() CursorLocation:cursorLocation Length:[currentEventString length] Text:currentEventString id:participationID];
     int32_t success = [client broadcast:[currentEvent serializeEvent] eventType:@"INSERT"];
-    NSLog([NSString stringWithFormat:@"Error Code: %d", success]);
+    NSLog([NSString stringWithFormat:@"submissionID: %d", success]);
     NSLog(@"Current Event String: %@", currentEventString);
     currentEventString = [[NSMutableString alloc] init];
+    
+    NSLog(@"Error message: %@", error);
+    NSLog(@"Number of Pending Events: %d", [client numberOfPendingEvents]);
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{

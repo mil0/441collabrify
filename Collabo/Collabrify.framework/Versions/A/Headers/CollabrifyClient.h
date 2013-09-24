@@ -109,7 +109,7 @@ extern NSString *const CollabrifyClientNetworkStatusKey; //NSNumber representing
  * Check CollabrifyError.h for domains and specific error codes
  *
  * @param client The client informing an object that an error occurred.
- * @param error An error object if an error occurrs. Otherwise this is nil. 
+ * @param erro1r An error object if an error occurrs. Otherwise this is nil. 
  * @discussion CollabrifyClientEncounteredErrorNotification is posted with CollabrifyClientErrorKey.
  * @warning Always called on the main thread.
  * @see CollabrifyError
