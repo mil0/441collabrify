@@ -74,22 +74,27 @@
         
     }
     
+    //Insertion
     else if (range.length == 0) {
         //if you were deleting, you aren't anymore, so make discrete event
         if (currentEvent->event->eventtype() == REMOVE) {
             [self broadcastEvent:eventDelay];
-            currentEvent->event->set_eventtype(INSERT);
         }
+        currentEvent->event->set_eventtype(INSERT);
         char appendedChar = [text characterAtIndex:0];
         [currentEventString appendFormat:@"%c", appendedChar];
     }
+    
+    //Deletion
     else if (range.length == 1){
         if (currentEvent->event->eventtype() == INSERT) {
             [self broadcastEvent:eventDelay];
-            currentEvent->event->set_eventtype(REMOVE);
         }
+        currentEvent->event->set_eventtype(REMOVE);
+        //Shouldn't this set event as REMOVE as well?
         char deletedChar = [[_textView text] characterAtIndex:cursorPosition-2];
         [currentEventString appendFormat:@"%c", deletedChar];
+        
         //deletion
         NSLog(@"deleted");
         NSLog(currentEventString);
