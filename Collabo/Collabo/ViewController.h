@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import <Collabrify/Collabrify.h>
 #import "EventMessage.h"
+#import <google/protobuf/io/zero_copy_stream_impl_lite.h>
+#import <google/protobuf/io/coded_stream.h>
 
 @interface ViewController : UIViewController <UITextViewDelegate, CollabrifyClientDataSource, CollabrifyClientDelegate>{
     NSMutableString * currentEventString;
@@ -17,7 +19,9 @@
     NSMutableArray * undoStack;
     NSMutableArray * redoStack;
     int64_t participationID; // participation ID - set when user creates/join session
+    int32_t cursorLocation;
     EventMessage * currentEvent;
+    
 }
 
 
@@ -29,6 +33,12 @@
 
 - (void) connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
+
+//NSData *dataForMessage(::google::protobuf::Message &message);
+//NSData *parseDelimitedMessageFromData(::google::protobuf::Message &message, NSData *data);
+
+
+
 
 /**
  * Receive data from the session along with its orderID. Decode the data in an app-specific way

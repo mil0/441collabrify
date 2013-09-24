@@ -107,7 +107,8 @@
 }
 
 - (void)client:(CollabrifyClient *)client receivedEventWithOrderID:(int64_t)orderID submissionRegistrationID:(int32_t)submissionRegistrationID eventType:(NSString *)eventType data:(NSData *)data{
-    
+    NSLog(@"Received Event");
+
     NSString * string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     if (string) {
         NSLog(string);
@@ -121,8 +122,9 @@
 -(void)broadcastEvent:(NSTimer *)t{
     assert(t == eventDelay);
     NSLog(@"Event Fired");
+    [currentEvent initWithType:currentEvent->event->eventtype() CursorLocation:cursorLocation Length:[currentEventString length] Text:currentEventString id:participationID];
     [client broadcast:[currentEvent serializeEvent] eventType:@"INSERT"];
-
+    
     NSLog(@"%@", currentEventString);
     currentEventString = [[NSMutableString alloc] init];
 }
@@ -194,9 +196,6 @@
                     }
                     else{
                         NSLog(@"%@", error);
-                        //[wholeScreen setHidden:YES];
-                        //[visableObj setHidden:YES];
-                        //[spinner stopAnimating];
                     }
                 }];
 
@@ -274,7 +273,5 @@
          
      }];
 }
-
-
 
 @end
