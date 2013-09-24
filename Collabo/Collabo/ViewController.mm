@@ -67,8 +67,14 @@
                                                 userInfo:nil
                                                  repeats:NO];
     
+    NSLog(@"Cursor Position before action: %d", cursorPosition);
+    NSLog(@"range.length before action: %d", range.length);
     
-    if (range.length == 0) {
+    if (cursorPosition == 0 && range.length == 0) {
+        
+    }
+    
+    else if (range.length == 0) {
         //if you were deleting, you aren't anymore, so make discrete event
         if (currentEvent->event->eventtype() == REMOVE) {
             [self broadcastEvent:eventDelay];
@@ -79,7 +85,8 @@
     else if (range.length == 1){
         //deletion
         NSLog(@"delete");
-        char deletedChar = [[_textView text] characterAtIndex:cursorPosition-2];
+        char deletedChar = [[_textView text] characterAtIndex:cursorPosition - 2];
+        //NSLog(@"Cursor Position after Delete: %d", cursorPosition);
         
     }
     else if(cursorPosition == 0){
