@@ -19,6 +19,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     currentEventString = [[NSMutableString alloc] init];
+    currentEvent = [[EventMessage alloc] init];
     //turning autocorrection / auto-cap off
     _textView.autocorrectionType = UITextAutocorrectionTypeNo;
     _textView.autocapitalizationType = UITextAutocapitalizationTypeNone;
@@ -70,7 +71,7 @@
     if (range.length == 0) {
         //if you were deleting, you aren't anymore, so make discrete event
         if (currentEvent->event->eventtype() == REMOVE) {
-            
+            [self broadcastEvent:<#(NSTimer *)#>]
         }
         char appendedChar = [text characterAtIndex:0];
         [currentEventString appendFormat:@"%c", appendedChar];
@@ -93,7 +94,9 @@
     NSString * string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     if (string) {
         NSLog(string);
-        dispatch_async(dispatch_get_main_queue(), ^(void){});
+        dispatch_async(dispatch_get_main_queue(), ^(void){
+            //do stuff with string
+        });
     }
 }
 
@@ -104,6 +107,8 @@
 {
     
 }
+
+
 
 //detect change from previous document content
 -(void)broadcastEvent:(NSTimer *)t{

@@ -9,7 +9,15 @@
 #import "EventMessage.h"
 #import "textevent.h"
 @implementation EventMessage
-@synthesize event;
+
+-(id)init{
+    self = [super init];
+    if (self) {
+        event = new Event();
+    }
+    return self;
+}
+
 -(BOOL) initWithType:(EventType)type CursorLocation:(int)location Length:(int)length Text:(NSString *)text
                   id:(::google::protobuf::int64_t)user_id{
     event->set_initialcursorlocation(location);
