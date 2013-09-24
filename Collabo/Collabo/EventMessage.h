@@ -15,7 +15,7 @@
     Event * event;
 }
 
--(BOOL) initWithType:(EventType)type CursorLocation:(int)location Length:(int)length Text:(NSString *)text
+-(void) initWithType:(EventType)type CursorLocation:(int)location Length:(int)length Text:(NSString *)text
                   id:(::google::protobuf::int64_t)user_id;
 -(NSData *) serializeEvent;
 
