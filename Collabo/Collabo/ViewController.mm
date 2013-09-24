@@ -71,7 +71,7 @@
     if (range.length == 0) {
         //if you were deleting, you aren't anymore, so make discrete event
         if (currentEvent->event->eventtype() == REMOVE) {
-            [self broadcastEvent:<#(NSTimer *)#>]
+            [self broadcastEvent:eventDelay];
         }
         char appendedChar = [text characterAtIndex:0];
         [currentEventString appendFormat:@"%c", appendedChar];
