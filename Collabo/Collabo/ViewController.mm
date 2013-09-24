@@ -27,9 +27,7 @@
 
 }
 -(void)viewWillAppear:(BOOL)animated{
-    
-    [client setDelegate:self];
-    
+        
 }
 - (void)client:(CollabrifyClient *)client encounteredError:(CollabrifyError *)error{
     NSLog(@"Error received: %@", error);
@@ -69,13 +67,23 @@
     
     NSLog(@"Cursor Position before action: %d", cursorPosition);
     NSLog(@"range.length before action: %d", range.length);
-    
-    if (cursorPosition == 0 && range.length == 0) {
+    if ([text isEqualToString:@""]){
+        if (cursorPosition == 0 && range.length == 0) {
+            return NO;
+        }
+        if (currentEvent->event->eventtype() == INSERT) {
+            [self broadcastEvent:eventDelay];
+        }
+        currentEvent->event->set_eventtype(REMOVE);
+        //Shouldn't this set event as REMOVE as well?
+        char deletedChar = [[_textView text] characterAtIndex:cursorPosition-1];
+        [currentEventString appendFormat:@"%c", deletedChar];
         
+        //deletion
+        NSLog(@"deleted");
+        NSLog(currentEventString);
     }
-    
-    //Insertion
-    else if (range.length == 0) {
+    else {
         //if you were deleting, you aren't anymore, so make discrete event
         if (currentEvent->event->eventtype() == REMOVE) {
             [self broadcastEvent:eventDelay];
@@ -84,24 +92,10 @@
         char appendedChar = [text characterAtIndex:0];
         [currentEventString appendFormat:@"%c", appendedChar];
     }
-    
-    //Deletion
-    else if (range.length == 1){
-        if (currentEvent->event->eventtype() == INSERT) {
-            [self broadcastEvent:eventDelay];
-        }
-        currentEvent->event->set_eventtype(REMOVE);
-        //Shouldn't this set event as REMOVE as well?
-        char deletedChar = [[_textView text] characterAtIndex:cursorPosition-2];
-        [currentEventString appendFormat:@"%c", deletedChar];
-        
-        //deletion
-        NSLog(@"deleted");
-        NSLog(currentEventString);
-    }
-    else if(cursorPosition == 0){
-        return NO;
-    }
+
+ 
+
+
     
     return YES;
 }
@@ -164,7 +158,8 @@
                     getLatestEvent:NO
                              error:&error];
     // combination of tag/name needs to be unique
-    
+    [client setDelegate:self];
+
     
     [client createSessionWithName:name_tag
                              tags:tags
@@ -221,11 +216,13 @@
                                                error:&error];
     
     
+    [client setDelegate:self];
+
+    
     //JOIN SESSION;
     NSString * password_test = @"hello";
     bool startpause_test = TRUE;
     int64_t sessionID_test = 2402002;
-    
     [client joinSessionWithID:sessionID_test
                       password:password_test
                    startPaused:startpause_test
