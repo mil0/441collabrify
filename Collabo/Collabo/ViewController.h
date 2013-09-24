@@ -12,7 +12,6 @@
 
 @interface ViewController : UIViewController <UITextViewDelegate, CollabrifyClientDataSource, CollabrifyClientDelegate>{
     NSMutableString * currentEventString;
-    NSMutableString * deleteString;
     NSTimer * eventDelay;
     CollabrifyClient * client;
     NSMutableArray * undoStack;

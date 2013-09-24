@@ -9,14 +9,14 @@
 #import "EventMessage.h"
 #import "textevent.h"
 @implementation EventMessage
-
+@synthesize event;
 -(BOOL) initWithType:(EventType)type CursorLocation:(int)location Length:(int)length Text:(NSString *)text
                   id:(::google::protobuf::int64_t)user_id{
     event->set_initialcursorlocation(location);
     event->set_eventtype(type);
     event->set_changelength(length);
     event->set_textadded([text UTF8String]);
-    event->set_userid(3);
+    event->set_userid(user_id);
     return YES;
 }
 

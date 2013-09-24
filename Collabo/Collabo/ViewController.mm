@@ -19,7 +19,6 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     currentEventString = [[NSMutableString alloc] init];
-    deleteString = [[NSMutableString alloc] init];
     //turning autocorrection / auto-cap off
     _textView.autocorrectionType = UITextAutocorrectionTypeNo;
     _textView.autocapitalizationType = UITextAutocapitalizationTypeNone;
@@ -69,9 +68,10 @@
     
     
     if (range.length == 0) {
-        //fire off delete event if it exists
-    
-        //insertions
+        //if you were deleting, you aren't anymore, so make discrete event
+        if (currentEvent->event->eventtype() == REMOVE) {
+            
+        }
         char appendedChar = [text characterAtIndex:0];
         [currentEventString appendFormat:@"%c", appendedChar];
     }
@@ -79,10 +79,9 @@
         //deletion
         NSLog(@"delete");
         char deletedChar = [[_textView text] characterAtIndex:cursorPosition-2];
-        [deleteString appendString:[NSString stringWithFormat:@"%c", deletedChar]];
-        NSLog(@"%@", deleteString);
-
-    }else if(cursorPosition == 0){
+        
+    }
+    else if(cursorPosition == 0){
         return NO;
     }
     

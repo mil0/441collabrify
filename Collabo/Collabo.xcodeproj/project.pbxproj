@@ -69,6 +69,7 @@
 		2607D84117DA74F5009421F9 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2607D84017DA74F5009421F9 /* libz.dylib */; };
 		26BBBE3E17F0F44100AF26DA /* textevent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 26BBBE3C17F0F44100AF26DA /* textevent.cpp */; };
 		26BBBE4117F0F4B600AF26DA /* EventMessage.mm in Sources */ = {isa = PBXBuildFile; fileRef = 26BBBE4017F0F4B600AF26DA /* EventMessage.mm */; };
+		26BBBE4317F22F4900AF26DA /* textevent.pb in Resources */ = {isa = PBXBuildFile; fileRef = 26BBBE4217F22F4900AF26DA /* textevent.pb */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -206,6 +207,7 @@
 		26BBBE3D17F0F44100AF26DA /* textevent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = textevent.h; sourceTree = "<group>"; };
 		26BBBE3F17F0F4B600AF26DA /* EventMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventMessage.h; sourceTree = "<group>"; };
 		26BBBE4017F0F4B600AF26DA /* EventMessage.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EventMessage.mm; sourceTree = "<group>"; };
+		26BBBE4217F22F4900AF26DA /* textevent.pb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = textevent.pb; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -281,6 +283,7 @@
 				26BBBE3C17F0F44100AF26DA /* textevent.cpp */,
 				26BBBE3D17F0F44100AF26DA /* textevent.h */,
 				2607D79117DA73F0009421F9 /* AppDelegate.h */,
+				26BBBE4217F22F4900AF26DA /* textevent.pb */,
 				2607D79217DA73F0009421F9 /* AppDelegate.m */,
 				12801D6417ECF10A009979B9 /* MainMenu.h */,
 				12801D6517ECF10A009979B9 /* MainMenu.m */,
@@ -541,6 +544,7 @@
 				2607D79C17DA73F0009421F9 /* MainStoryboard_iPhone.storyboard in Resources */,
 				2607D79F17DA73F0009421F9 /* MainStoryboard_iPad.storyboard in Resources */,
 				2607D7C217DA740B009421F9 /* Collabrify.bundle in Resources */,
+				26BBBE4317F22F4900AF26DA /* textevent.pb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

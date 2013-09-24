@@ -11,6 +11,7 @@
 #import <google/protobuf/io/zero_copy_stream_impl_lite.h>
 #import <google/protobuf/io/coded_stream.h>
 @interface EventMessage : NSObject{
+@public
     Event * event;
 }
 
