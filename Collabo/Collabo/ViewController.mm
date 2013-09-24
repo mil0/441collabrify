@@ -144,7 +144,7 @@
 - (IBAction)create:(id)sender {
     // Do any additional setup after loading the view, typically from a nib.
 
-    NSString * name_tag = @"hello6";
+    NSString * name_tag = @"hello7";
     NSString * password_test = @"hello";
     
     NSString *test_name = @"CREATOR";
@@ -222,7 +222,7 @@
     //JOIN SESSION;
     NSString * password_test = @"hello";
     bool startpause_test = TRUE;
-    int64_t sessionID_test = 2402002;
+    int64_t sessionID_test = 2425001;
     [client joinSessionWithID:sessionID_test
                       password:password_test
                    startPaused:startpause_test
@@ -230,7 +230,7 @@
                  
                  if (!error) {
                      NSLog(@"join completed");
-                     
+                     NSLog(@"Delegate: %@", [client delegate]);
                      bool test2 = [client isInSession];
                      
                      
