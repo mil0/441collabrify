@@ -172,8 +172,9 @@
                             NSLog(@"is in session, and SESSION ID IS:");
                             int64_t session_ID = [client currentSessionID];
                             NSLog([NSString stringWithFormat:@"%lld", session_ID]);
-                            int64_t participationID = [client participantID];
+                            participationID = [client participantID]; // setting participation ID
                             NSLog([NSString stringWithFormat:@"%lld", participationID]);
+                            
                             
                         }
                         else {
@@ -233,6 +234,7 @@
                          NSLog(@"is in session, and SESSION ID IS:");
                          int64_t session_ID = [client currentSessionID];
                          NSLog([NSString stringWithFormat:@"%lld", session_ID]);
+                         participationID = [client participantID]; // setting participationID
                      }
                      else {
                          NSLog(@"NOT IN SESSION");
