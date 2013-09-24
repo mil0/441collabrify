@@ -280,6 +280,9 @@
 		2607D78817DA73F0009421F9 /* Collabo */ = {
 			isa = PBXGroup;
 			children = (
+				2607D7A017DA73F0009421F9 /* ViewController.h */,
+				2607D7A117DA73F0009421F9 /* ViewController.mm */,
+				2607D79A17DA73F0009421F9 /* MainStoryboard_iPhone.storyboard */,
 				26BBBE3C17F0F44100AF26DA /* textevent.cpp */,
 				26BBBE3D17F0F44100AF26DA /* textevent.h */,
 				2607D79117DA73F0009421F9 /* AppDelegate.h */,
@@ -287,14 +290,11 @@
 				2607D79217DA73F0009421F9 /* AppDelegate.m */,
 				12801D6417ECF10A009979B9 /* MainMenu.h */,
 				12801D6517ECF10A009979B9 /* MainMenu.m */,
-				2607D79A17DA73F0009421F9 /* MainStoryboard_iPhone.storyboard */,
 				12801D6117ECEF8D009979B9 /* JoinSessionViewController.h */,
 				12801D6217ECEF8D009979B9 /* JoinSessionViewController.m */,
 				2607D79D17DA73F0009421F9 /* MainStoryboard_iPad.storyboard */,
-				2607D7A017DA73F0009421F9 /* ViewController.h */,
 				12801D5E17ECEF5B009979B9 /* CreateSessionViewController.h */,
 				12801D5F17ECEF5B009979B9 /* CreateSessionViewController.m */,
-				2607D7A117DA73F0009421F9 /* ViewController.mm */,
 				12801D5B17ECEE5A009979B9 /* SessionViewController.h */,
 				12801D5C17ECEE5A009979B9 /* SessionViewController.m */,
 				2607D78917DA73F0009421F9 /* Supporting Files */,

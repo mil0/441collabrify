@@ -16,7 +16,7 @@
     CollabrifyClient * client;
     NSMutableArray * undoStack;
     NSMutableArray * redoStack;
-    int64_t participationID;
+    int64_t participationID; // participation ID - set when user creates/join session
     EventMessage * currentEvent;
 }
 
