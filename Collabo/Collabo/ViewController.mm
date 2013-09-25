@@ -86,6 +86,8 @@
         currentEventType = REMOVE;
         //Shouldn't this set event as REMOVE as well?
         char deletedChar = [[_textView text] characterAtIndex:cursorPosition-1];
+        
+        
         [currentEventString appendFormat:@"%c", deletedChar];
         
         //deletion
