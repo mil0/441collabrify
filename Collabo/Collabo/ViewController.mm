@@ -20,11 +20,11 @@
 	// Do any additional setup after loading the view, typically from a nib.
     currentEventString = [[NSMutableString alloc] init];
     currentEvent = [[EventMessage alloc] init];
+    undoStack = [[NSMutableArray alloc] initWithCapacity:30];
+    redoStack = [[NSMutableArray alloc] initWithCapacity:30];
     //turning autocorrection / auto-cap off
     _textView.autocorrectionType = UITextAutocorrectionTypeNo;
     _textView.autocapitalizationType = UITextAutocapitalizationTypeNone;
-
-
 }
 -(void)viewWillAppear:(BOOL)animated{
         
@@ -56,10 +56,10 @@
     // NSLog([NSString stringWithFormat:@"Cursor Position: %d", cursorPosition]);
     
     [eventDelay invalidate]; eventDelay = nil;
-    //make new timer, after 0.5sec user has stopped typing
+    //make new timer, after 1.5sec user has stopped typing
     //register change
     
-    eventDelay = [NSTimer scheduledTimerWithTimeInterval:20000
+    eventDelay = [NSTimer scheduledTimerWithTimeInterval:1.5
                                                   target:self
                                                 selector:@selector(broadcastEvent:)
                                                 userInfo:nil
@@ -144,7 +144,7 @@
 - (IBAction)create:(id)sender {
     // Do any additional setup after loading the view, typically from a nib.
 
-    NSString * name_tag = @"hello7";
+    NSString * name_tag = @"hello8";
     NSString * password_test = @"hello";
     
     NSString *test_name = @"CREATOR";
@@ -221,7 +221,7 @@
     
     //JOIN SESSION;
     NSString * password_test = @"hello";
-    bool startpause_test = TRUE;
+    bool startpause_test = FALSE;
     int64_t sessionID_test = 2425001;
     [client joinSessionWithID:sessionID_test
                       password:password_test
