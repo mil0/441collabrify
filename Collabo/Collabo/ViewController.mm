@@ -28,7 +28,7 @@
     _textView.autocapitalizationType = UITextAutocapitalizationTypeNone;
 }
 -(void)viewWillAppear:(BOOL)animated{
-        
+    
 }
 - (void)client:(CollabrifyClient *)client encounteredError:(CollabrifyError *)error{
     NSLog(@"Error received: %@", error);
@@ -47,27 +47,26 @@
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
-    NSLog(@"Text should change : %@", text);
     if(range.length > 1){
         return NO;
     }
     
-    //get cursor
+    // get cursor
     NSUInteger cursorPosition = textView.selectedRange.location;
     // NSLog([NSString stringWithFormat:@"Cursor Position: %d", cursorPosition]);
-    
     [eventDelay invalidate]; eventDelay = nil;
+    
     //make new timer, after 1.5sec user has stopped typing
     //register change
-    
-    eventDelay = [NSTimer scheduledTimerWithTimeInterval:1.5
+    eventDelay = [NSTimer scheduledTimerWithTimeInterval:2000000
                                                   target:self
                                                 selector:@selector(broadcastEvent:)
                                                 userInfo:nil
                                                  repeats:NO];
     
-    NSLog(@"Cursor Position before action: %d", cursorPosition);
-    NSLog(@"range.length before action: %d", range.length);
+    //NSLog(@"Cursor Position before action: %d", cursorPosition);
+    //NSLog(@"range.length before action: %d", range.length);
+    //delete event
     if ([text isEqualToString:@""]){
         if (cursorPosition == 0 && range.length == 0) {
             return NO;
@@ -84,27 +83,31 @@
             [self broadcastEvent:eventDelay];
         }
         currentEvent->event->set_eventtype(REMOVE);
+        currentEventType = REMOVE;
         //Shouldn't this set event as REMOVE as well?
         char deletedChar = [[_textView text] characterAtIndex:cursorPosition-1];
         [currentEventString appendFormat:@"%c", deletedChar];
         
         //deletion
-        NSLog(@"deleted");
-        NSLog(currentEventString);
+        //NSLog(@"deleted");
+        //NSLog(currentEventString);
     }
     else {
         //if you were deleting, you aren't anymore, so make discrete event
         if (currentEvent->event->eventtype() == REMOVE) {
+            [currentEvent initWithType:currentEvent->event->eventtype()
+                 initialCursorLocation:cursorStart
+                     newCursorLocation:textView.selectedRange.location
+                                Length:[currentEventString length]
+                                  Text:currentEventString id:participationID];
+
             [self broadcastEvent:eventDelay];
         }
         currentEvent->event->set_eventtype(INSERT);
+        currentEventType = INSERT;
         char appendedChar = [text characterAtIndex:0];
         [currentEventString appendFormat:@"%c", appendedChar];
     }
-
- 
-
-
     
     return YES;
 }
@@ -126,21 +129,26 @@
     assert(t == eventDelay);
     NSLog(@"Event Fired");
     NSError *error;
+    //reset cursor location
     cursorStart = _textView.selectedRange.location;
     //[self applyEvent:currentEvent];
     //add currentEvent to undo stack
     [undoStack addObject:currentEvent];
     
     //broadcast event to other clients
-    int32_t success = [client broadcast:[currentEvent serializeEvent] eventType:@"INSERT"];
+    int32_t submissionID = [client broadcast:[currentEvent serializeEvent] eventType:@"INSERT"];
     
-    NSLog([NSString stringWithFormat:@"submissionID: %d", success]);
+    //NSLog([NSString stringWithFormat:@"submissionID: %d", submissionID]);
     NSLog(@"Current Event String: %@", currentEventString);
+    NSLog(@"Current Event Start Cursor Locaiton: %d", currentEvent->event->initialcursorlocation());
+    NSLog(@"Current Event Ending Cursor Locaiton: %d", currentEvent->event->newcursorlocation());
+    NSLog(@"Current Event Type: %d", currentEvent->event->eventtype());
+    
     //reset currentEventString
     currentEventString = [[NSMutableString alloc] init];
     
     NSLog(@"Error message: %@", error);
-    NSLog(@"Number of Pending Events: %d", [client numberOfPendingEvents]);
+    //NSLog(@"Number of Pending Events: %d", [client numberOfPendingEvents]);
 }
 
 - (void)applyEvent:(EventMessage *)eventToApply{
