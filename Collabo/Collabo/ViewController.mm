@@ -58,7 +58,7 @@
     
     //make new timer, after 1.5sec user has stopped typing
     //register change
-    eventDelay = [NSTimer scheduledTimerWithTimeInterval:2000000
+    eventDelay = [NSTimer scheduledTimerWithTimeInterval:0.5
                                                   target:self
                                                 selector:@selector(broadcastEvent:)
                                                 userInfo:nil
@@ -72,21 +72,14 @@
             return NO;
         }
         if (currentEvent->event->eventtype() == INSERT) {
-            //capture state in currentEvent
-            
-            [currentEvent initWithType:currentEvent->event->eventtype()
-                 initialCursorLocation:cursorStart
-                     newCursorLocation:textView.selectedRange.location
-                                Length:[currentEventString length]
-                                  Text:currentEventString id:participationID];
-            
             [self broadcastEvent:eventDelay];
         }
         currentEvent->event->set_eventtype(REMOVE);
         currentEventType = REMOVE;
         //Shouldn't this set event as REMOVE as well?
-        char deletedChar = [[_textView text] characterAtIndex:cursorPosition-1];
-        [currentEventString appendFormat:@"%c", deletedChar];
+        unichar deletedChar = [[_textView text] characterAtIndex:cursorPosition-1];
+        currentEventString = [[NSMutableString stringWithCharacters:&deletedChar length:1] stringByAppendingString:currentEventString];
+        //[currentEventString appendFormat:@"%c", deletedChar];
         
         //deletion
         //NSLog(@"deleted");
@@ -95,12 +88,6 @@
     else {
         //if you were deleting, you aren't anymore, so make discrete event
         if (currentEvent->event->eventtype() == REMOVE) {
-            [currentEvent initWithType:currentEvent->event->eventtype()
-                 initialCursorLocation:cursorStart
-                     newCursorLocation:textView.selectedRange.location
-                                Length:[currentEventString length]
-                                  Text:currentEventString id:participationID];
-
             [self broadcastEvent:eventDelay];
         }
         currentEvent->event->set_eventtype(INSERT);
@@ -129,6 +116,16 @@
     assert(t == eventDelay);
     NSLog(@"Event Fired");
     NSError *error;
+    
+    [currentEvent initWithType:currentEvent->event->eventtype()
+         initialCursorLocation:cursorStart
+             newCursorLocation:_textView.selectedRange.location
+                        Length:[currentEventString length]
+                          Text:currentEventString id:participationID];
+    
+
+    
+    
     //reset cursor location
     cursorStart = _textView.selectedRange.location;
     //[self applyEvent:currentEvent];
@@ -154,20 +151,20 @@
 - (void)applyEvent:(EventMessage *)eventToApply{
     //get event type, location, and string
     EventType type = eventToApply->event->eventtype();
-    int32_t location = eventToApply->event->initialcursorlocation();
-    
+    int32_t initial_location = eventToApply->event->initialcursorlocation();
+    int32_t final_location = eventToApply->event->newcursorlocation();
     NSMutableString * text = [NSString stringWithCString:eventToApply->event->textadded().c_str() encoding:[NSString defaultCStringEncoding]];
     
     //get text before event
     NSString * textViewContent = [_textView text];
     NSRange range;
-    range.location = location;
+    range.location = initial_location;
     range.length = [text length];
     switch (type) {
         case INSERT:
         {
-            NSString * before = [textViewContent substringToIndex:location];
-            NSString * after = [textViewContent substringFromIndex:location];
+            NSString * before = [textViewContent substringToIndex:initial_location];
+            NSString * after = [textViewContent substringFromIndex:initial_location];
             before = [before stringByAppendingString:text];
             before = [before stringByAppendingString:after];
             
@@ -179,8 +176,10 @@
             break;
         case REMOVE:
         {
-            //remove text in appropriate spot
-            
+            NSString * before = [textViewContent substringToIndex:final_location];
+            NSString * after = [textViewContent substringFromIndex:initial_location];
+            NSString * newTextViewContent = [before stringByAppendingString:after];
+            _textView.text = newTextViewContent;
         }
             break;
         default:
@@ -195,16 +194,48 @@
     [super touchesBegan:touches withEvent:event];
 }
 
+- (EventMessage *)reverseEvent:(EventMessage *)event{
+    EventMessage * reversed = [[EventMessage alloc] init];
+    if (event->event->eventtype() == INSERT)
+        reversed->event->set_eventtype(REMOVE);
+    else if(event->event->eventtype() == REMOVE)
+        reversed->event->set_eventtype(INSERT);
+
+    reversed->event->set_initialcursorlocation(event->event->newcursorlocation());
+    reversed->event->set_newcursorlocation(event->event->initialcursorlocation());
+    reversed->event->set_changelength(event->event->changelength());
+    reversed->event->set_userid(event->event->userid());
+    reversed->event->set_textadded(event->event->textadded());
+    
+    return reversed;
+    
+}
+
 - (IBAction)undo:(id)sender {
     
-    [self.textView.undoManager undo];
+    //[self.textView.undoManager undo];
     NSLog(@"undo");
+    if ([undoStack count] == 0) 
+        return;
+    
+    
+    EventMessage * reversed = [self reverseEvent:[undoStack lastObject]];
+    [undoStack removeLastObject];
+    [redoStack addObject:reversed];
+    [self applyEvent:reversed];
 }
 
 // Redoing
 - (IBAction)redo:(id)sender {
-    [self.textView.undoManager redo];
+    //[self.textView.undoManager redo];
     NSLog(@"redo");
+    if ([redoStack count] == 0) 
+        return;
+    EventMessage * reversed = [self reverseEvent:[redoStack lastObject]];
+    [redoStack removeLastObject];
+    [undoStack addObject:reversed];
+    [self applyEvent:reversed];
+    
 }
 
 - (IBAction)create:(id)sender {
