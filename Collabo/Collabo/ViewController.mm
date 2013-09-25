@@ -148,7 +148,7 @@
 - (IBAction)create:(id)sender {
     // Do any additional setup after loading the view, typically from a nib.
 
-    NSString * name_tag = @"hello";
+    NSString * name_tag = @"hello7";
     NSString * password_test = @"hello";
     
     NSString *test_name = @"CREATOR";
@@ -225,8 +225,9 @@
     
     //JOIN SESSION;
     NSString * password_test = @"hello";
-    bool startpause_test = TRUE;
-    int64_t sessionID_test = 2429002;
+    bool startpause_test = FALSE;
+    int64_t sessionID_test = 2439001
+    ;
     [client joinSessionWithID:sessionID_test
                       password:password_test
                    startPaused:startpause_test
@@ -255,9 +256,6 @@
                      NSLog(@"%@", error);
                  }
              }];
-    
-    
-    
 }
 
 - (IBAction)exit:(id)sender {
