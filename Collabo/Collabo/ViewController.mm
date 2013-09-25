@@ -71,7 +71,7 @@
         if (cursorPosition == 0 && range.length == 0) {
             return NO;
         }
-        if (currentEvent->event->eventtype() == INSERT) {
+        if (currentEvent->event->eventtype() == INSERT && [currentEventString length] > 0) {
             [self broadcastEvent:eventDelay];
         }
         currentEvent->event->set_eventtype(REMOVE);
@@ -91,7 +91,7 @@
     }
     else {
         //if you were deleting, you aren't anymore, so make discrete event
-        if (currentEvent->event->eventtype() == REMOVE) {
+        if (currentEvent->event->eventtype() == REMOVE && [currentEventString length] > 0) {
             [self broadcastEvent:eventDelay];
         }
         currentEvent->event->set_eventtype(INSERT);
@@ -134,20 +134,21 @@
     cursorStart = _textView.selectedRange.location;
     //[self applyEvent:currentEvent];
     //add currentEvent to undo stack
-    [undoStack addObject:currentEvent];
+    EventMessage * eventToBroadcast = currentEvent;
+    [undoStack addObject:eventToBroadcast];
     
     //broadcast event to other clients
-    int32_t submissionID = [client broadcast:[currentEvent serializeEvent] eventType:@"INSERT"];
+    int32_t submissionID = [client broadcast:[eventToBroadcast serializeEvent] eventType:@"INSERT"];
     
     //NSLog([NSString stringWithFormat:@"submissionID: %d", submissionID]);
     NSLog(@"Current Event String: %@", currentEventString);
-    NSLog(@"Current Event Start Cursor Locaiton: %d", currentEvent->event->initialcursorlocation());
-    NSLog(@"Current Event Ending Cursor Locaiton: %d", currentEvent->event->newcursorlocation());
-    NSLog(@"Current Event Type: %d", currentEvent->event->eventtype());
+    NSLog(@"Current Event Start Cursor Locaiton: %d", eventToBroadcast->event->initialcursorlocation());
+    NSLog(@"Current Event Ending Cursor Locaiton: %d", eventToBroadcast->event->newcursorlocation());
+    NSLog(@"Current Event Type: %d", eventToBroadcast->event->eventtype());
     
     //reset currentEventString
     currentEventString = [[NSMutableString alloc] init];
-    
+    currentEvent = [[EventMessage alloc] init];
     NSLog(@"Error message: %@", error);
     //NSLog(@"Number of Pending Events: %d", [client numberOfPendingEvents]);
 }
