@@ -18,9 +18,9 @@
     return self;
 }
 
--(void) initWithType:(EventType)type CursorLocation:(int)location Length:(int)length Text:(NSString *)text
-                  id:(::google::protobuf::int64_t)user_id{
+-(void) initWithType:(EventType)type initialCursorLocation:(int)location newCursorLocation:(int)newLocation Length:(int)length Text:(NSString *)text id:(::google::protobuf::int64_t)user_id{
     event->set_initialcursorlocation(location);
+    event->set_newcursorlocation(newLocation);
     event->set_eventtype(type);
     event->set_changelength(length);
     event->set_textadded([text UTF8String]);

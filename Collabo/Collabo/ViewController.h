@@ -19,9 +19,9 @@
     NSMutableArray * undoStack;
     NSMutableArray * redoStack;
     int64_t participationID; // participation ID - set when user creates/join session
-    int32_t cursorLocation;
+    int32_t cursorStart;
     EventMessage * currentEvent;
-    
+    EventType currentEventType;
 }
 
 
@@ -31,8 +31,11 @@
 - (IBAction)create:(id)sender;
 - (IBAction)join:(id)sender;
 
-- (void) connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response;
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response;
+- (void)applyEvent:(EventMessage *)eventToApply;
+
 @property (weak, nonatomic) IBOutlet UITextView *textView;
+
 
 //NSData *dataForMessage(::google::protobuf::Message &message);
 //NSData *parseDelimitedMessageFromData(::google::protobuf::Message &message, NSData *data);

@@ -22,6 +22,7 @@
     currentEvent = [[EventMessage alloc] init];
     undoStack = [[NSMutableArray alloc] initWithCapacity:30];
     redoStack = [[NSMutableArray alloc] initWithCapacity:30];
+    cursorStart = 0;
     //turning autocorrection / auto-cap off
     _textView.autocorrectionType = UITextAutocorrectionTypeNo;
     _textView.autocapitalizationType = UITextAutocapitalizationTypeNone;
@@ -46,7 +47,7 @@
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
-    
+    NSLog(@"Text should change : %@", text);
     if(range.length > 1){
         return NO;
     }
@@ -72,6 +73,14 @@
             return NO;
         }
         if (currentEvent->event->eventtype() == INSERT) {
+            //capture state in currentEvent
+            
+            [currentEvent initWithType:currentEvent->event->eventtype()
+                 initialCursorLocation:cursorStart
+                     newCursorLocation:textView.selectedRange.location
+                                Length:[currentEventString length]
+                                  Text:currentEventString id:participationID];
+            
             [self broadcastEvent:eventDelay];
         }
         currentEvent->event->set_eventtype(REMOVE);
@@ -113,18 +122,63 @@
 }
 
 //broadcast event, add to appropriate stack
--(void)broadcastEvent:(NSTimer *)t{
+- (void)broadcastEvent:(NSTimer *)t{
     assert(t == eventDelay);
     NSLog(@"Event Fired");
     NSError *error;
-    [currentEvent initWithType:currentEvent->event->eventtype() CursorLocation:cursorLocation Length:[currentEventString length] Text:currentEventString id:participationID];
+    cursorStart = _textView.selectedRange.location;
+    //[self applyEvent:currentEvent];
+    //add currentEvent to undo stack
+    [undoStack addObject:currentEvent];
+    
+    //broadcast event to other clients
     int32_t success = [client broadcast:[currentEvent serializeEvent] eventType:@"INSERT"];
+    
     NSLog([NSString stringWithFormat:@"submissionID: %d", success]);
     NSLog(@"Current Event String: %@", currentEventString);
+    //reset currentEventString
     currentEventString = [[NSMutableString alloc] init];
     
     NSLog(@"Error message: %@", error);
     NSLog(@"Number of Pending Events: %d", [client numberOfPendingEvents]);
+}
+
+- (void)applyEvent:(EventMessage *)eventToApply{
+    //get event type, location, and string
+    EventType type = eventToApply->event->eventtype();
+    int32_t location = eventToApply->event->initialcursorlocation();
+    
+    NSMutableString * text = [NSString stringWithCString:eventToApply->event->textadded().c_str() encoding:[NSString defaultCStringEncoding]];
+    
+    //get text before event
+    NSString * textViewContent = [_textView text];
+    NSRange range;
+    range.location = location;
+    range.length = [text length];
+    switch (type) {
+        case INSERT:
+        {
+            NSString * before = [textViewContent substringToIndex:location];
+            NSString * after = [textViewContent substringFromIndex:location];
+            before = [before stringByAppendingString:text];
+            before = [before stringByAppendingString:after];
+            
+            //insert the text in the appropriate spot
+            NSString * newTextViewContent = before;
+            _textView.text = newTextViewContent;
+            
+        }
+            break;
+        case REMOVE:
+        {
+            //remove text in appropriate spot
+            
+        }
+            break;
+        default:
+            break;
+    }
+    
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
