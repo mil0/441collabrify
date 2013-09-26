@@ -42,6 +42,8 @@
 }
 
 - (void)textViewDidChangeSelection:(UITextView *)textView {
+    cursorStart = _textView.selectedRange.location;
+    NSLog(@"I'm moving my cursor: %d", cursorStart);
     //unichar prevChar = [textView.text characterAtIndex:(location - 1)];
     //NSString *prevCharStr = [NSString stringWithFormat:@"%C", prevChar];
 }
