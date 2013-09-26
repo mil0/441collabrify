@@ -22,6 +22,8 @@
     currentEvent = [[EventMessage alloc] init];
     undoStack = [[NSMutableArray alloc] initWithCapacity:30];
     redoStack = [[NSMutableArray alloc] initWithCapacity:30];
+    globalStack = [[NSMutableArray alloc] initWithCapacity:60];
+
     cursorStart = 0;
     //turning autocorrection / auto-cap off
     _textView.autocorrectionType = UITextAutocorrectionTypeNo;
@@ -108,8 +110,15 @@
 - (void)client:(CollabrifyClient *)client receivedEventWithOrderID:(int64_t)orderID submissionRegistrationID:(int32_t)submissionRegistrationID eventType:(NSString *)eventType data:(NSData *)data{
     EventMessage * received = [[EventMessage alloc] init];
     parseDelimitedEventFromData(*(received->event), data);
+    
+    
     if (received) {
+        //if event is not nil, add to queue
         NSLog(@"Received event with orderID: %lld", orderID);
+        
+        [globalStack addObject:received];
+        
+        //apply event if it's not from your changeset
         if (received->event->userid() != participationID) {
             NSLog(@"Data received %@", received);
             NSLog(@"Received text: %s", received->event->textadded().c_str());
@@ -232,12 +241,33 @@
     NSLog(@"undo");
     if ([undoStack count] == 0) 
         return;
-    
+    NSMutableArray * tempStack = [[NSMutableArray alloc] init];
+        while ([globalStack count] && ((EventMessage *)[globalStack lastObject])->event->userid() != participationID) {
+            [tempStack addObject:[globalStack lastObject]];
+            [self applyEvent: [self reverseEvent:(EventMessage*)[tempStack lastObject]]];
+            [globalStack removeLastObject];
+        }
+        [globalStack removeLastObject];
     
     EventMessage * reversed = [self reverseEvent:[undoStack lastObject]];
     [undoStack removeLastObject];
     [redoStack addObject:reversed];
     [self applyEvent:reversed];
+
+    int32_t offset = reversed->event->changelength();
+    if (reversed->event->eventtype() == REMOVE) {
+        offset *= -1;
+    }
+    
+    //reapply other events from tempStack with offset from reversed
+    while ([tempStack count]) {
+        EventMessage * eventToReapply = [tempStack lastObject];
+        [tempStack removeLastObject];
+        eventToReapply->event->set_initialcursorlocation(eventToReapply->event->initialcursorlocation() + offset);
+        eventToReapply->event->set_newcursorlocation(eventToReapply->event->newcursorlocation() + offset);
+        [self applyEvent:eventToReapply];
+    }
+
 }
 
 // Redoing
@@ -256,7 +286,7 @@
 - (IBAction)create:(id)sender {
     // Do any additional setup after loading the view, typically from a nib.
 
-    NSString * name_tag = @"helloooo";
+    NSString * name_tag = @"yoyoyo";
     NSString * password_test = @"hello";
     
     NSString *test_name = @"CREATOR";
