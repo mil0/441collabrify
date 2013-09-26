@@ -334,7 +334,7 @@
     //JOIN SESSION;
     NSString * password_test = @"hello";
     bool startpause_test = FALSE;
-    int64_t sessionID_test = 2432045;
+    int64_t sessionID_test = 2436070;
     [client joinSessionWithID:sessionID_test
                       password:password_test
                    startPaused:startpause_test
