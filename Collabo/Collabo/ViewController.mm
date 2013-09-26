@@ -192,7 +192,8 @@
         default:
             break;
     }
-    
+    cursorStart = _textView.selectedRange.location;
+
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
@@ -248,7 +249,7 @@
 - (IBAction)create:(id)sender {
     // Do any additional setup after loading the view, typically from a nib.
 
-    NSString * name_tag = @"hello8";
+    NSString * name_tag = @"hello";
     NSString * password_test = @"hello";
     
     NSString *test_name = @"CREATOR";
