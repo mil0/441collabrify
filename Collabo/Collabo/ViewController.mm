@@ -109,6 +109,7 @@
     EventMessage * received = [[EventMessage alloc] init];
     parseDelimitedEventFromData(*(received->event), data);
     if (received) {
+        NSLog(@"Received event with orderID: %lld", orderID);
         if (received->event->userid() != participationID) {
             NSLog(@"Data received %@", received);
             NSLog(@"Received text: %s", received->event->textadded().c_str());
@@ -255,7 +256,7 @@
 - (IBAction)create:(id)sender {
     // Do any additional setup after loading the view, typically from a nib.
 
-    NSString * name_tag = @"helloo";
+    NSString * name_tag = @"helloooo";
     NSString * password_test = @"hello";
     
     NSString *test_name = @"CREATOR";
