@@ -25,6 +25,10 @@
     EventType currentEventType;
     UIAlertView * createSessionAlert;
     NSMutableString * sessionName;
+    NSInteger latest_orderID;
+    
+    BOOL undo_trigger; 
+    
 }
 
 
