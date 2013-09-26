@@ -189,6 +189,9 @@
     NSLog(@"Event Fired");
     NSError *error;
     
+    
+    
+    
     [currentEvent initWithType:currentEvent->event->eventtype()
          initialCursorLocation:cursorStart
              newCursorLocation:_textView.selectedRange.location
@@ -196,6 +199,11 @@
                           Text:currentEventString id:participationID];
     
 
+    if (currentEvent->event->eventtype() == REMOVE) {
+        currentEvent->event->set_initialcursorlocation(_textView.selectedRange.location);
+        currentEvent->event->set_newcursorlocation(cursorStart);
+    }
+    
     
     
     //reset cursor location
@@ -251,8 +259,8 @@
             break;
         case REMOVE:
         {
-            NSString * before = [textViewContent substringToIndex:final_location];
-            NSString * after = [textViewContent substringFromIndex:initial_location];
+            NSString * before = [textViewContent substringToIndex:initial_location];
+            NSString * after = [textViewContent substringFromIndex:final_location];
             NSString * newTextViewContent = [before stringByAppendingString:after];
             _textView.text = newTextViewContent;
         }
