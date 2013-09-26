@@ -137,7 +137,9 @@
     //[self applyEvent:currentEvent];
     //add currentEvent to undo stack
     EventMessage * eventToBroadcast = currentEvent;
-    [undoStack addObject:eventToBroadcast];
+    if (eventToBroadcast->event->userid() == participationID) {
+        [undoStack addObject:eventToBroadcast];
+    }
     
     //broadcast event to other clients
     int32_t submissionID = [client broadcast:(dataForEvent(*(currentEvent->event))) eventType:@"INSERT"];
