@@ -29,13 +29,16 @@
     
     BOOL undo_trigger;
     BOOL redo_trigger;
+
     
-    
+        
     //Alert Views
     UIAlertView * createSessionAlert;
     UIAlertView * ErrorOccurred;
 }
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *redo2;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *undo2;
 
 - (IBAction)undo:(id)sender;
 - (IBAction)redo:(id)sender;

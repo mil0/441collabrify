@@ -52,10 +52,14 @@
     
     
     //ACTIVATE navigation controller TOOLBAR
-    [self.navigationController setNavigationBarHidden:NO];
+    //[self.navigationController setNavigationBarHidden:NO];
+    
+    //two buttons on rightside of navigation controller
     
 
-    //[backButton release];
+    
+    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects: _undo2, _redo2, nil];
+
 
 
 }
@@ -68,28 +72,43 @@
 }
 
 
-//HITTING THE BACK BUTTON
--(void) viewWillDisappear:(BOOL)animated {
-    if ([self.navigationController.viewControllers indexOfObject:self] == NSNotFound) {
-        [self.navigationController setNavigationBarHidden:YES];
-        
-        [client leaveAndDeleteSession:YES completionHandler:
-         ^(BOOL success, CollabrifyError *error){
-             if (success) {
-                 NSLog(@"logout completed");
-             }
-             else {
-                 NSLog(@"logout not completed");
-                 
-             }
-             
-         }];
+//HITTING THE BACK BUTTON <- Navigation controller / can delete later
+//-(void) viewWillDisappear:(BOOL)animated {
+//    if ([self.navigationController.viewControllers indexOfObject:self] == NSNotFound) {
+//        [self.navigationController setNavigationBarHidden:YES];
+//        
+//        [client leaveAndDeleteSession:YES completionHandler:
+//         ^(BOOL success, CollabrifyError *error){
+//             if (success) {
+//                 NSLog(@"logout completed");
+//             }
+//             else {   
+//                 NSLog(@"logout not completed");
+//                 
+//             }
+//             
+//         }];
+//
+//    }
+//    [super viewWillDisappear:animated];
+//}
 
-    }
-    [super viewWillDisappear:animated];
-}
+//FOR some reason EXIT button not working when going back to home screen.
 
-
+//Using this instead.
+//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+//    [client leaveAndDeleteSession:YES completionHandler:
+//     ^(BOOL success, CollabrifyError *error){
+//         if (success) {
+//             NSLog(@"logout completed");
+//         }
+//         else {
+//             NSLog(@"logout not completed");
+//             
+//         }
+//         
+//     }];
+//}
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
@@ -566,8 +585,10 @@
                  }
              }];
 }
+//NOT WORKING?? DONT KNOW WHY!
 
-- (IBAction)exit:(id)sender {
+
+- (IBAction)exit2:(id)sender {
     [client leaveAndDeleteSession:YES completionHandler:
      ^(BOOL success, CollabrifyError *error){
          if (success) {
@@ -575,10 +596,15 @@
          }
          else {
              NSLog(@"logout not completed");
-             
+             NSLog(@"Error received, %@", error);
          }
          
      }];
+    
+    [self performSegueWithIdentifier:@"segue.main.push" sender:self];
+    
+    
+    
 }
 
 NSData *dataForEvent(::google::protobuf::Message &message)
