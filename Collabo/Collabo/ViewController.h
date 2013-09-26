@@ -23,13 +23,17 @@
     int32_t cursorStart;
     EventMessage * currentEvent;
     EventType currentEventType;
-    UIAlertView * createSessionAlert;
+    
     NSMutableString * sessionName;
     NSInteger latest_orderID;
     
     BOOL undo_trigger;
     BOOL redo_trigger;
     
+    
+    //Alert Views
+    UIAlertView * createSessionAlert;
+    UIAlertView * ErrorOccurred;
 }
 
 

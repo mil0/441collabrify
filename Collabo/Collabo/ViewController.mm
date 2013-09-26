@@ -25,10 +25,19 @@
     redoStack = [[NSMutableArray alloc] initWithCapacity:30];
     globalStack = [[NSMutableArray alloc] initWithCapacity:60];
     
+    
+    //Alrt Views
+    
+    //Create Session Alert View
     createSessionAlert = [[UIAlertView alloc] initWithTitle:@"Create Session" message:@"Enter your session tag here." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Create", nil];
     
     createSessionAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
     createSessionAlert.tag = 0;
+    
+    //Error Occurred Alert View
+    ErrorOccurred = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Unable to Create Session" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil , nil];
+    ErrorOccurred.alertViewStyle = UIAlertViewStyleDefault;
+    ErrorOccurred.tag = 1;
     
     
     cursorStart = 0;
@@ -40,7 +49,29 @@
     
     undo_trigger = false;
     redo_trigger = false;
+    
+    
+    //ACTIVATE navigation controller TOOLBAR
+    [self.navigationController setNavigationBarHidden:NO];
+    
+
+    //[backButton release];
+
+
 }
+
+-(void) viewWillDisappear:(BOOL)animated {
+    if ([self.navigationController.viewControllers indexOfObject:self]==NSNotFound) {
+        // back button was pressed.  We know this is true because self is no longer
+        // in the navigation stack.
+        
+        [self.navigationController setNavigationBarHidden:YES];
+
+    }
+    [super viewWillDisappear:animated];
+}
+
+
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
@@ -77,7 +108,8 @@
                      }
                  }
                  else{
-                     NSLog(@"%@", error);
+                     NSLog(@"Error Recieved: %@", error);
+                     [ErrorOccurred show];
                  }
              }];
         }
@@ -89,8 +121,12 @@
 {
     
 }
+
 - (void)client:(CollabrifyClient *)client encounteredError:(CollabrifyError *)error{
-    NSLog(@"Error received: %@", error);
+    
+    [ErrorOccurred show];
+    NSLog(@"LOL");
+    //NSLog(@"Error received: %@", error);
 }
 
 

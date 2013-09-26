@@ -10,6 +10,10 @@
 #import <Collabrify/Collabrify.h>
 @interface MainMenu : UIViewController <CollabrifyClientDelegate> {
     CollabrifyClient * client;
+    
+    UIAlertView * createSessionAlert;
+    NSMutableString * sessionName;
+    int64_t participationID;
 }
 @property CollabrifyClient * client;
 @end
