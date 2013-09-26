@@ -12,7 +12,7 @@
 #import <google/protobuf/io/zero_copy_stream_impl_lite.h>
 #import <google/protobuf/io/coded_stream.h>
 
-@interface ViewController : UIViewController <UITextViewDelegate, CollabrifyClientDataSource, CollabrifyClientDelegate>{
+@interface ViewController : UIViewController <UIAlertViewDelegate, UITextViewDelegate, CollabrifyClientDataSource, CollabrifyClientDelegate>{
     NSMutableString * currentEventString;
     NSTimer * eventDelay;
     CollabrifyClient * client;
@@ -23,7 +23,8 @@
     int32_t cursorStart;
     EventMessage * currentEvent;
     EventType currentEventType;
-    
+    UIAlertView * createSessionAlert;
+    NSMutableString * sessionName;
 }
 
 

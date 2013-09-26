@@ -19,17 +19,69 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     currentEventString = [[NSMutableString alloc] init];
+    sessionName = [[NSMutableString alloc] init];
     currentEvent = [[EventMessage alloc] init];
     undoStack = [[NSMutableArray alloc] initWithCapacity:30];
     redoStack = [[NSMutableArray alloc] initWithCapacity:30];
     globalStack = [[NSMutableArray alloc] initWithCapacity:60];
-
+    
+    createSessionAlert = [[UIAlertView alloc] initWithTitle:@"Create Session" message:@"Enter your session tag here." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Create", nil];
+    
+    createSessionAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    createSessionAlert.tag = 0;
+    
+    
     cursorStart = 0;
     //turning autocorrection / auto-cap off
     _textView.autocorrectionType = UITextAutocorrectionTypeNo;
     _textView.autocapitalizationType = UITextAutocapitalizationTypeNone;
 }
--(void)viewWillAppear:(BOOL)animated{
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if(alertView.tag == 0){
+        if (buttonIndex == 1) {
+            UITextField * textField = [alertView textFieldAtIndex:0];
+            NSLog(@"%@", textField.text);
+            sessionName = [NSMutableString stringWithString:@"Session"];
+            [client createSessionWithName:sessionName
+                                     tags:[NSArray arrayWithObject:textField.text]
+                                 password:nil
+                              startPaused:NO
+                        completionHandler:^(int64_t sessionID, CollabrifyError * error)
+             {
+                 
+                 if(!error){
+                     NSLog(@"Session Successfully Created");
+                     //[self performSegueWithIdentifier:@"createTheSession"sender:self];
+                     bool test2 = [client isInSession];
+                     
+                     
+                     if (test2) {
+                         int64_t session_ID = [client currentSessionID];
+                         NSLog([NSString stringWithFormat:@"Session ID: %lld", session_ID]);
+                         participationID = [client participantID]; // setting participation ID
+                         NSLog([NSString stringWithFormat:@"Participation ID: %lld", participationID]);
+                         
+                         
+                     }
+                     else {
+                         NSLog(@"is not in sessoin");
+                         NSLog([error localizedDescription]);
+                         
+                     }
+                 }
+                 else{
+                     NSLog(@"%@", error);
+                 }
+             }];
+        }
+    }
+}
+
+
+-(void)viewWillAppear:(BOOL)animated
+{
     
 }
 - (void)client:(CollabrifyClient *)client encounteredError:(CollabrifyError *)error{
@@ -253,18 +305,25 @@
     [undoStack removeLastObject];
     [redoStack addObject:reversed];
     [self applyEvent:reversed];
-
+    
+    int32_t initial_cursor_undo = reversed->event->initialcursorlocation();
+    int32_t new_cursor_undo = reversed->event->newcursorlocation();
+    int32_t comparative_cursor = initial_cursor_undo;
     int32_t offset = reversed->event->changelength();
     if (reversed->event->eventtype() == REMOVE) {
         offset *= -1;
+        comparative_cursor = new_cursor_undo;
     }
     
     //reapply other events from tempStack with offset from reversed
     while ([tempStack count]) {
         EventMessage * eventToReapply = [tempStack lastObject];
         [tempStack removeLastObject];
-        eventToReapply->event->set_initialcursorlocation(eventToReapply->event->initialcursorlocation() + offset);
-        eventToReapply->event->set_newcursorlocation(eventToReapply->event->newcursorlocation() + offset);
+        if ((comparative_cursor > eventToReapply->event->initialcursorlocation() && eventToReapply->event->eventtype() == INSERT)
+            || (comparative_cursor > eventToReapply->event->newcursorlocation() && eventToReapply->event->eventtype() == REMOVE)) {
+            eventToReapply->event->set_initialcursorlocation(eventToReapply->event->initialcursorlocation() + offset);
+            eventToReapply->event->set_newcursorlocation(eventToReapply->event->newcursorlocation() + offset);
+        }
         [self applyEvent:eventToReapply];
     }
 
@@ -286,13 +345,15 @@
 - (IBAction)create:(id)sender {
     // Do any additional setup after loading the view, typically from a nib.
 
-    NSString * name_tag = @"yoyoyo";
+    NSString * name_tag = @"oijerg";
     NSString * password_test = @"hello";
     
     NSString *test_name = @"CREATOR";
     NSError *error;
     NSArray *tags = [[NSArray alloc] initWithObjects:@"Some Tags", nil];
-
+    
+    [createSessionAlert show];
+    
     client = [[CollabrifyClient alloc] initWithGmail:test_name
                        displayName:test_name
                       accountGmail:@"441fall2013@umich.edu"
@@ -301,44 +362,6 @@
                              error:&error];
     // combination of tag/name needs to be unique
     [client setDelegate:self];
-
-    
-    [client createSessionWithName:name_tag
-                             tags:tags
-                         password:password_test
-                      startPaused:NO
-                completionHandler:^(int64_t sessionID, CollabrifyError * error)
-                {
-                    
-                    if(!error){
-                        NSLog(@"Session Successfully Created");
-                        //[self performSegueWithIdentifier:@"createTheSession"sender:self];
-                        bool test2 = [client isInSession];
-                        
-                        
-                        if (test2) {
-                            int64_t session_ID = [client currentSessionID];
-                            NSLog([NSString stringWithFormat:@"Session ID: %lld", session_ID]);
-                            participationID = [client participantID]; // setting participation ID
-                            NSLog([NSString stringWithFormat:@"Participation ID: %lld", participationID]);
-                            
-                            
-                        }
-                        else {
-                            NSLog(@"is not in sessoin");
-                            NSLog([error localizedDescription]);
-                            
-                        }
-                    }
-                    else{
-                        NSLog(@"%@", error);
-                    }
-                }];
-
-
-
-    
-
 
 }
 
