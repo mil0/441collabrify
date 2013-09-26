@@ -110,6 +110,8 @@
         if (received->event->userid() != participationID) {
             NSLog(@"Data received %@", received);
             NSLog(@"Received text: %s", received->event->textadded().c_str());
+            NSLog(@"Cursor Begin Location, %d", received->event->initialcursorlocation());
+            NSLog(@"Cursor End Location, %d", received->event->newcursorlocation());
             dispatch_async(dispatch_get_main_queue(), ^(void){
                 [self applyEvent:received];
             });
