@@ -27,7 +27,8 @@
     NSMutableString * sessionName;
     NSInteger latest_orderID;
     
-    BOOL undo_trigger; 
+    BOOL undo_trigger;
+    BOOL redo_trigger;
     
 }
 

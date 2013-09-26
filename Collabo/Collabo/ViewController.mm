@@ -39,6 +39,7 @@
     latest_orderID = 0;
     
     undo_trigger = false;
+    redo_trigger = false;
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
@@ -187,9 +188,13 @@
         else {
             latest_orderID = orderID;
             if (undo_trigger) {
-                NSNumber * undo_ID = [NSNumber numberWithInt:orderID];
-                [redoStack addObject:undo_ID];
+                //NSNumber * undo_ID = [NSNumber numberWithInt:orderID];
+                [redoStack addObject:[NSNumber numberWithInteger:latest_orderID]];
                 undo_trigger = false;
+            }
+            else if (redo_trigger){
+                [undoStack addObject:[NSNumber numberWithInteger:latest_orderID]];
+                redo_trigger = false;
             }
             else {
                 [undoStack addObject:[NSNumber numberWithInteger:latest_orderID]];
@@ -328,15 +333,6 @@
     NSInteger begin = undo_orderID + 1;
     while (begin != orderID_count) {
         
-        //REMOVE
-            //BEFORE
-            //AFTER - does nothing
-        
-        
-        //INSERT
-            //BEFORE
-            //AFTER - does nothing
-        
         //update the undo cursor location
         EventMessage * check_event = [globalStack objectAtIndex:begin];
         
@@ -350,6 +346,9 @@
                 undo_initcursorLocation += check_event->event->changelength();
                 undo_newcursorLocation += check_event->event->changelength();
             }
+        }
+        else if (check_event->event->initialcursorlocation() > undo_initcursorLocation &&
+                 check_event->event->newcursorlocation() < undo_newcursorLocation){
         }
         
         begin++;
@@ -373,49 +372,6 @@
     [self applyEvent:reversed_undo_event];
     //[client broadcast:dataForEvent(reversed_undo_event) eventType:reversed_undo_event->event->eventtype()];
     
-    
-    
-    
-    
-    
-    
-    /*
-    NSMutableArray * tempStack = [[NSMutableArray alloc] init];
-        while ([globalStack count] && ((EventMessage *)[globalStack lastObject])->event->userid() != participationID) {
-            [tempStack addObject:[globalStack lastObject]];
-            [self applyEvent: [self reverseEvent:(EventMessage*)[tempStack lastObject]]];
-            [globalStack removeLastObject];
-        }
-        [globalStack removeLastObject];
-    
-    EventMessage * reversed = [self reverseEvent:[undoStack lastObject]];
-    [undoStack removeLastObject];
-    [redoStack addObject:reversed];
-    [self applyEvent:reversed];
-    
-    int32_t initial_cursor_undo = reversed->event->initialcursorlocation();
-    int32_t new_cursor_undo = reversed->event->newcursorlocation();
-    int32_t comparative_cursor = initial_cursor_undo;
-    int32_t offset = reversed->event->changelength();
-    if (reversed->event->eventtype() == REMOVE) {
-        offset *= -1;
-        comparative_cursor = new_cursor_undo;
-    }
-    
-    //reapply other events from tempStack with offset from reversed
-    while ([tempStack count]) {
-        EventMessage * eventToReapply = [tempStack lastObject];
-        [tempStack removeLastObject];
-        if ((comparative_cursor > eventToReapply->event->initialcursorlocation() && eventToReapply->event->eventtype() == INSERT)
-            || (comparative_cursor > eventToReapply->event->newcursorlocation() && eventToReapply->event->eventtype() == REMOVE)) {
-            eventToReapply->event->set_initialcursorlocation(eventToReapply->event->initialcursorlocation() + offset);
-            eventToReapply->event->set_newcursorlocation(eventToReapply->event->newcursorlocation() + offset);
-        }
-        [self applyEvent:eventToReapply];
-        [globalStack addObject:eventToReapply];
-    }
-     */
-
 }
 
 // Redoing
@@ -424,10 +380,60 @@
     NSLog(@"redo");
     if ([redoStack count] == 0) 
         return;
-    EventMessage * reversed = [self reverseEvent:[redoStack lastObject]];
+    
+    NSInteger redo_orderID = [[redoStack lastObject] integerValue];
     [redoStack removeLastObject];
-    [undoStack addObject:reversed];
-    [self applyEvent:reversed];
+    //[redoStack addObject:undo_orderID];
+    
+    EventMessage * redo_event = [globalStack objectAtIndex:redo_orderID];
+    NSInteger redo_initcursorLocation = redo_event->event->initialcursorlocation();
+    NSInteger redo_newcursorLocation = redo_event->event->newcursorlocation();
+    
+    NSInteger orderID_count = [globalStack count];
+    
+    //calculate the offset
+    NSInteger begin = redo_orderID + 1;
+    while (begin != orderID_count) {
+        
+        //update the undo cursor location
+        EventMessage * check_event = [globalStack objectAtIndex:begin];
+        
+        if (check_event->event->initialcursorlocation() <= redo_initcursorLocation) {
+            
+            if (check_event->event->eventtype() == REMOVE) {
+                redo_initcursorLocation -= check_event->event->changelength();
+                redo_newcursorLocation -= check_event->event->changelength();
+            }
+            else {
+                redo_initcursorLocation += check_event->event->changelength();
+                redo_newcursorLocation += check_event->event->changelength();
+            }
+        }
+        else if (check_event->event->initialcursorlocation() > redo_initcursorLocation &&
+                 check_event->event->newcursorlocation() < redo_newcursorLocation){
+        }
+        
+        begin++;
+    }
+    
+    //reverse the event
+    
+    EventMessage * reversed_redo_event = [self reverseEvent:redo_event];
+    
+    reversed_redo_event->event->set_initialcursorlocation(redo_initcursorLocation);
+    reversed_redo_event->event->set_newcursorlocation(redo_newcursorLocation);
+    
+    //broadcast the event
+    
+    //signal put new event in redo stack
+    redo_trigger = true;
+    
+    
+    [client broadcast:(dataForEvent(*(reversed_redo_event->event))) eventType:[NSString stringWithFormat:@"%u", reversed_redo_event->event->eventtype()]];
+    //this has to happen because broadcast will not applyevent for you
+    [self applyEvent:reversed_redo_event];
+    //[client broadcast:dataForEvent(reversed_undo_event) eventType:reversed_undo_event->event->eventtype()];
+    
     
 }
 
