@@ -8,6 +8,7 @@
 
 #import "EventMessage.h"
 #import "textevent.h"
+
 @implementation EventMessage
 
 -(id)init{
@@ -26,12 +27,5 @@
     event->set_textadded([text UTF8String]);
     event->set_userid(user_id);
 }
-
--(NSData *)serializeEvent{
-    std::string ps = event->SerializeAsString();
-    return [NSData dataWithBytes:ps.c_str() length:ps.size()];
-}
-
-
 
 @end

@@ -36,6 +36,10 @@
 
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 
+NSData *dataForEvent(::google::protobuf::Message &message);
+
+
+NSData *parseDelimitedEventFromData(::google::protobuf::Message &message, NSData *data);
 
 //NSData *dataForMessage(::google::protobuf::Message &message);
 //NSData *parseDelimitedMessageFromData(::google::protobuf::Message &message, NSData *data);
