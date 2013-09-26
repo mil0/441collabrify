@@ -104,15 +104,16 @@
 }
 
 - (void)client:(CollabrifyClient *)client receivedEventWithOrderID:(int64_t)orderID submissionRegistrationID:(int32_t)submissionRegistrationID eventType:(NSString *)eventType data:(NSData *)data{
-    NSLog(@"Received Event");
     EventMessage * received = [[EventMessage alloc] init];
     parseDelimitedEventFromData(*(received->event), data);
-    NSLog(@"Received text: %s", received->event->textadded().c_str());
     if (received) {
-        NSLog(@"Data received %@", received);
-        dispatch_async(dispatch_get_main_queue(), ^(void){
-            //do stuff with string
-        });
+        if (received->event->userid() != participationID) {
+            NSLog(@"Data received %@", received);
+            NSLog(@"Received text: %s", received->event->textadded().c_str());
+            dispatch_async(dispatch_get_main_queue(), ^(void){
+                [self applyEvent:received];
+            });
+        }
     }
 }
 
