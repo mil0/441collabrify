@@ -166,5 +166,7 @@ NSData *parseDelimitedEventFromData(::google::protobuf::Message &message, NSData
 - (void)clientDidEnterBackground:(CollabrifyClient *)client;
 
 
+-(void) setClient:(CollabrifyClient*)client_segue;
+
 @end
 

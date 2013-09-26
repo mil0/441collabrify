@@ -60,12 +60,30 @@
 
 }
 
+
+//setting/passing the client to ViewController
+-(void) setClient:(CollabrifyClient*)client_segue {
+    client = client_segue;
+    [client setDelegate:self];
+}
+
+
+//HITTING THE BACK BUTTON
 -(void) viewWillDisappear:(BOOL)animated {
-    if ([self.navigationController.viewControllers indexOfObject:self]==NSNotFound) {
-        // back button was pressed.  We know this is true because self is no longer
-        // in the navigation stack.
-        
+    if ([self.navigationController.viewControllers indexOfObject:self] == NSNotFound) {
         [self.navigationController setNavigationBarHidden:YES];
+        
+        [client leaveAndDeleteSession:YES completionHandler:
+         ^(BOOL success, CollabrifyError *error){
+             if (success) {
+                 NSLog(@"logout completed");
+             }
+             else {
+                 NSLog(@"logout not completed");
+                 
+             }
+             
+         }];
 
     }
     [super viewWillDisappear:animated];

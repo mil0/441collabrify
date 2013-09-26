@@ -7,8 +7,10 @@
 //
 
 #import "MainMenu.h"
+#import "ViewController.h"
 
-@interface MainMenu ()
+
+@interface MainMenu () <UITextViewDelegate, CollabrifyClientDelegate, CollabrifyClientDataSource>
 
 @end
 
@@ -66,7 +68,11 @@
     //turn off navigation toolbar on screen
     [self.navigationController setNavigationBarHidden:YES];
 
-	// Do any additional setup after loading the view.
+	
+    //[[self client] setDelegate:self];
+    //[[self client] setDataSource:self];
+    
+    // Do any additional setup after loading the view.
 }
 - (IBAction)create:(id)sender {
     [createSessionAlert show];
@@ -141,7 +147,6 @@
 
 
 
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -150,6 +155,12 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     
+    if([[segue identifier] isEqualToString:@"segue.push.alert"]){
+        //UIViewController * destView = (ViewController *)[segue destinationViewController];
+        
+        [segue.destinationViewController setClient:client];
+
+    }
 }
 
 @end
