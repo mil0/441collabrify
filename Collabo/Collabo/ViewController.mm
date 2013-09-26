@@ -325,6 +325,7 @@
             eventToReapply->event->set_newcursorlocation(eventToReapply->event->newcursorlocation() + offset);
         }
         [self applyEvent:eventToReapply];
+        [globalStack addObject:eventToReapply];
     }
 
 }
