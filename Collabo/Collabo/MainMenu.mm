@@ -67,8 +67,11 @@
     
     //turn off navigation toolbar on screen
     [self.navigationController setNavigationBarHidden:YES];
+    
+    
+    //Hides the status bar
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
 
-	
     //[[self client] setDelegate:self];
     //[[self client] setDataSource:self];
     
