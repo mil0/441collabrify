@@ -23,6 +23,9 @@
     return self;
 }
 
+
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -35,6 +38,13 @@
     
     [self.navigationController setNavigationBarHidden:NO];
     
+}
+
+-(void) viewWillDisappear:(BOOL)animated {
+    if ([self.navigationController.viewControllers indexOfObject:self] == NSNotFound) {
+        [self.navigationController setNavigationBarHidden:YES];
+    }
+    [super viewWillDisappear:animated];
 }
 
 - (void)didReceiveMemoryWarning
