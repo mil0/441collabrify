@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Collabrify/Collabrify.h>
 
 @interface SessionViewController : UITableViewController{
     NSMutableArray * sessionList;
+    CollabrifyClient * client;
 }
 - (void) setSessionList:(NSArray *)list;
-
+- (void) setClient:(CollabrifyClient *)client_segue;
 
 @end

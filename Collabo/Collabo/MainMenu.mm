@@ -205,6 +205,8 @@
     }
     else if([[segue identifier] isEqualToString:@"segue.join"]){
         [segue.destinationViewController setSessionList:joinSessionList];
+        [segue.destinationViewController setClient:client];
+
     }
 }
 

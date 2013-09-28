@@ -51,8 +51,8 @@
     redo_trigger = false;
     
     
-    //ACTIVATE navigation controller TOOLBAR
-    //[self.navigationController setNavigationBarHidden:NO];
+    //SET navigation controller TOOLBAR
+    [self.navigationController setNavigationBarHidden:YES];
     
     //two buttons on rightside of navigation controller
     //self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects: _undo2, _redo2, nil];

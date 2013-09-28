@@ -32,6 +32,9 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    [self.navigationController setNavigationBarHidden:NO];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -61,7 +64,8 @@
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    // Configure the cell...
+    CollabrifySession * session = [sessionList objectAtIndex:[indexPath row]];
+    cell.textLabel.text = [session sessionName];
     
     return cell;
 }
@@ -121,5 +125,13 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
 }
+
+//setting/passing the client to ViewController
+-(void) setClient:(CollabrifyClient*)client_segue {
+    client = client_segue;
+    [client setDelegate:self];
+    //participationID = [client participantID];
+}
+
 
 @end
