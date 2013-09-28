@@ -34,7 +34,10 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     [self.navigationController setNavigationBarHidden:NO];
-    
+    NSLog(@"Number of sessions: %d", [sessionList count]);
+    NSLog(@"Session ID: %lld", [[sessionList objectAtIndex:0] sessionID]);
+    NSLog(@"Session Name: %@", [[sessionList objectAtIndex:0] sessionName]);
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -49,22 +52,24 @@
 {
 #warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 #warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return [sessionList count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
+    // UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault)
+                                                   reuseIdentifier:@"cell"];
     CollabrifySession * session = [sessionList objectAtIndex:[indexPath row]];
+    NSLog(@"Session Name: %@", [session sessionName]);
     cell.textLabel.text = [session sessionName];
     
     return cell;
