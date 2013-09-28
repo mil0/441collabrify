@@ -66,6 +66,10 @@
     return cell;
 }
 
+- (void) setSessionList:(NSArray *)list{
+    sessionList = list;
+}
+
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath

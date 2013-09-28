@@ -12,7 +12,9 @@
     CollabrifyClient * client;
     
     UIAlertView * createSessionAlert;
+    UIAlertView * joinSessionAlert;
     NSMutableString * sessionName;
+    NSMutableArray *joinSessionList;
     int64_t participationID;
 }
 //@property CollabrifyClient * client;

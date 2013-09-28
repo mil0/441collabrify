@@ -303,7 +303,7 @@ extern NSString *const CollabrifyClientNetworkStatusKey; //NSNumber representing
  *
  * @param tags The tags of the sessions you want to retrieve
  * @param completionHandler A completion block that passes back an array of CollabrifySession objects
- * @discussion The completionHandler is called on the main thread.
+ * @discussion The completiponHandler is called on the main thread.
  */
 - (void)listSessionsWithTags:(NSArray *)tags completionHandler:(ListSessionsCompletionHandler)completionHandler;
 

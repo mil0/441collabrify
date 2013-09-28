@@ -8,7 +8,7 @@
 
 #import "MainMenu.h"
 #import "ViewController.h"
-
+#import "SessionViewController.h"
 
 @interface MainMenu () <UITextViewDelegate, CollabrifyClientDelegate, CollabrifyClientDataSource>
 
@@ -54,12 +54,26 @@
     
     
     //Create Session Alert View
-    createSessionAlert = [[UIAlertView alloc] initWithTitle:@"Create Session" message:@"Please Enter Session Tag" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Create", nil];
+    createSessionAlert = [[UIAlertView alloc] initWithTitle:@"Create Session" message:nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Create", nil];
     
-    createSessionAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    createSessionAlert.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
     createSessionAlert.tag = 0;
     
+    UITextField * sessionNameField = [createSessionAlert textFieldAtIndex:0];
+    UITextField * sessionTagField = [createSessionAlert textFieldAtIndex:1];
     
+    [sessionNameField setPlaceholder:@"Enter Session Name"];
+    [sessionTagField setPlaceholder:@"Enter Session Tag(s)"];
+    
+    sessionTagField.secureTextEntry = NO;
+    
+    
+    //Join Session Alert View
+    
+    joinSessionAlert = [[UIAlertView alloc] initWithTitle:@"Join Session" message:@"Please Enter Session Tag(s) separated by commas" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Join", nil];
+    
+    joinSessionAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    joinSessionAlert.tag = 1;
     
     sessionName = [[NSMutableString alloc] init];
     int64_t participationID;
@@ -76,13 +90,11 @@
     //[[self client] setDataSource:self];
     
     // Do any additional setup after loading the view.
-}
-- (IBAction)create:(id)sender {
-    [createSessionAlert show];
+    
+    //Init Collab Client
     
     NSError *error;
-
-    NSString *test_name = @"CREATOR";
+    NSString *test_name = @"test_name";
     client = [[CollabrifyClient alloc] initWithGmail:test_name
                                          displayName:test_name
                                         accountGmail:@"441fall2013@umich.edu"
@@ -92,18 +104,27 @@
     // combination of tag/name needs to be unique
     [client setDelegate:self];
 }
-- (IBAction)join:(id)sender {
+- (IBAction)create:(id)sender {
+    [createSessionAlert show];
 }
+- (IBAction)join:(id)sender {
+    [joinSessionAlert show];
+}
+
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    if(alertView.tag == 0){
+    if(alertView.tag == 0){ // Create Button
         if (buttonIndex == 1) {
             UITextField * textField = [alertView textFieldAtIndex:0];
+            UITextField * textField2 = [alertView textFieldAtIndex:1];
+            
+            NSArray * tags = [textField2.text componentsSeparatedByString:@","];
+            
             NSLog(@"%@", textField.text);
-            sessionName = [NSMutableString stringWithString:@"Session"];
-            [client createSessionWithName:sessionName
-                                     tags:[NSArray arrayWithObject:textField.text]
+            //sessionName = [NSMutableString stringWithString:textField.text];
+            [client createSessionWithName:textField.text
+                                     tags:tags
                                  password:nil
                               startPaused:NO
                         completionHandler:^(int64_t sessionID, CollabrifyError * error)
@@ -146,6 +167,26 @@
              }];
         }
     }
+    
+    if (alertView.tag == 1) {
+        if (buttonIndex == 1) {
+            UITextField * textField = [alertView textFieldAtIndex:0];
+            NSLog(@"%@", textField.text);
+            NSString * sessionTags = textField.text;
+            NSMutableArray *myTags = [sessionTags componentsSeparatedByString:@","];
+            [client listSessionsWithTags:myTags completionHandler:^(NSArray * sessionList, CollabrifyError * error){
+               //give sessionList to SessionViewController to display unless there is an error
+                if (!error) {
+                    joinSessionList = sessionList;
+                    [self performSegueWithIdentifier:@"segue.join" sender:self];
+                }
+                else{
+                    NSLog([error localizedDescription]);
+                }
+            }];
+            
+        }
+    }
 }
 
 
@@ -160,9 +201,10 @@
     
     if([[segue identifier] isEqualToString:@"segue.push.alert"]){
         //UIViewController * destView = (ViewController *)[segue destinationViewController];
-        
         [segue.destinationViewController setClient:client];
-
+    }
+    else if([[segue identifier] isEqualToString:@"segue.join"]){
+        [segue.destinationViewController setSessionList:joinSessionList];
     }
 }
 

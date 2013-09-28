@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SessionViewController : UITableViewController
+@interface SessionViewController : UITableViewController{
+    NSMutableArray * sessionList;
+}
+- (void) setSessionList:(NSArray *)list;
+
 
 @end

@@ -10,8 +10,6 @@
 		1252DEBA17F4CCD30084368F /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1252DEB917F4CCD30084368F /* Default@2x.png */; };
 		1252DEBE17F4CD330084368F /* collabo.png in Resources */ = {isa = PBXBuildFile; fileRef = 1252DEBD17F4CD330084368F /* collabo.png */; };
 		12801D5D17ECEE5A009979B9 /* SessionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 12801D5C17ECEE5A009979B9 /* SessionViewController.m */; };
-		12801D6017ECEF5B009979B9 /* CreateSessionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 12801D5F17ECEF5B009979B9 /* CreateSessionViewController.m */; };
-		12801D6317ECEF8D009979B9 /* JoinSessionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 12801D6217ECEF8D009979B9 /* JoinSessionViewController.m */; };
 		12801D6617ECF10A009979B9 /* MainMenu.mm in Sources */ = {isa = PBXBuildFile; fileRef = 12801D6517ECF10A009979B9 /* MainMenu.mm */; };
 		26056CD417E653ED005A8312 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 26056CD217E653D7005A8312 /* libstdc++.dylib */; };
 		26056CD617E653FC005A8312 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26056CD517E653FC005A8312 /* QuartzCore.framework */; };
@@ -90,10 +88,6 @@
 		1252DEBD17F4CD330084368F /* collabo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = collabo.png; sourceTree = "<group>"; };
 		12801D5B17ECEE5A009979B9 /* SessionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionViewController.h; sourceTree = "<group>"; };
 		12801D5C17ECEE5A009979B9 /* SessionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionViewController.m; sourceTree = "<group>"; };
-		12801D5E17ECEF5B009979B9 /* CreateSessionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateSessionViewController.h; sourceTree = "<group>"; };
-		12801D5F17ECEF5B009979B9 /* CreateSessionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateSessionViewController.m; sourceTree = "<group>"; };
-		12801D6117ECEF8D009979B9 /* JoinSessionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JoinSessionViewController.h; sourceTree = "<group>"; };
-		12801D6217ECEF8D009979B9 /* JoinSessionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JoinSessionViewController.m; sourceTree = "<group>"; };
 		12801D6417ECF10A009979B9 /* MainMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenu.h; sourceTree = "<group>"; };
 		12801D6517ECF10A009979B9 /* MainMenu.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MainMenu.mm; sourceTree = "<group>"; };
 		26056CD217E653D7005A8312 /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
@@ -298,11 +292,7 @@
 				2607D79217DA73F0009421F9 /* AppDelegate.m */,
 				12801D6417ECF10A009979B9 /* MainMenu.h */,
 				12801D6517ECF10A009979B9 /* MainMenu.mm */,
-				12801D6117ECEF8D009979B9 /* JoinSessionViewController.h */,
-				12801D6217ECEF8D009979B9 /* JoinSessionViewController.m */,
 				2607D79D17DA73F0009421F9 /* MainStoryboard_iPad.storyboard */,
-				12801D5E17ECEF5B009979B9 /* CreateSessionViewController.h */,
-				12801D5F17ECEF5B009979B9 /* CreateSessionViewController.m */,
 				12801D5B17ECEE5A009979B9 /* SessionViewController.h */,
 				12801D5C17ECEE5A009979B9 /* SessionViewController.m */,
 				2607D78917DA73F0009421F9 /* Supporting Files */,
@@ -626,8 +616,6 @@
 				2607D83B17DA7450009421F9 /* wire_format.cc in Sources */,
 				2607D83C17DA7450009421F9 /* wire_format_lite.cc in Sources */,
 				12801D5D17ECEE5A009979B9 /* SessionViewController.m in Sources */,
-				12801D6017ECEF5B009979B9 /* CreateSessionViewController.m in Sources */,
-				12801D6317ECEF8D009979B9 /* JoinSessionViewController.m in Sources */,
 				12801D6617ECF10A009979B9 /* MainMenu.mm in Sources */,
 				26BBBE3E17F0F44100AF26DA /* textevent.cpp in Sources */,
 				26BBBE4117F0F4B600AF26DA /* EventMessage.mm in Sources */,

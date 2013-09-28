@@ -60,8 +60,6 @@
     
     self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects: _undo2, _redo2, nil];
 
-
-
 }
 
 
