@@ -23,6 +23,9 @@
     return self;
 }
 
+
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -38,6 +41,13 @@
     NSLog(@"Session ID: %lld", [[sessionList objectAtIndex:0] sessionID]);
     NSLog(@"Session Name: %@", [[sessionList objectAtIndex:0] sessionName]);
 
+}
+
+-(void) viewWillDisappear:(BOOL)animated {
+    if ([self.navigationController.viewControllers indexOfObject:self] == NSNotFound) {
+        [self.navigationController setNavigationBarHidden:YES];
+    }
+    [super viewWillDisappear:animated];
 }
 
 - (void)didReceiveMemoryWarning

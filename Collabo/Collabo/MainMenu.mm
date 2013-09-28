@@ -149,6 +149,9 @@
                          [[self navigationItem] setBackBarButtonItem: newBackButton];
 
                          
+                         NSLog(@"Session Name: %@", textField.text);
+                         NSLog(@"Session Tags: %@", tags);
+                         
                          //Manual trigger segue that initiates after Session Login Completed
                          [self performSegueWithIdentifier:@"segue.push.alert" sender:self];
                          
@@ -179,6 +182,7 @@
                 if (!error) {
                     joinSessionList = sessionList;
                     [self performSegueWithIdentifier:@"segue.join" sender:self];
+                    
                 }
                 else{
                     NSLog([error localizedDescription]);
