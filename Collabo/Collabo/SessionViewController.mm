@@ -8,6 +8,7 @@
 
 #import "SessionViewController.h"
 
+
 @interface SessionViewController ()
 
 @end
@@ -139,14 +140,59 @@
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
+    
+    
+    NSString * password_test = nil;
+    bool startpause_test = FALSE;
+    int64_t sessionID_test = 2436070;
+    [client joinSessionWithID:[[sessionList objectAtIndex:[indexPath row]] sessionID]
+                     password:password_test
+                  startPaused:startpause_test
+            completionHandler:^(int64_t code, int32_t code2, CollabrifyError *error) {
+                
+                if (!error) {
+                    NSLog(@"join completed");
+                    NSLog(@"Delegate: %@", [client delegate]);
+                    bool test2 = [client isInSession];
+                    
+                    
+                    if (test2) {
+                        NSLog(@"is in session, and SESSION ID IS:");
+                        int64_t session_ID = [client currentSessionID];
+                        NSLog([NSString stringWithFormat:@"%lld", session_ID]);
+                        //participationID = [client participantID]; // setting participationID
+                    }
+                    else {
+                        NSLog(@"NOT IN SESSION");
+                        NSLog(@"%@", error);
+                    }
+                    
+                }
+                else {
+                    NSLog(@"join not completed");
+                    NSLog(@"%@", error);
+                }
+            }];
+    
+    
+    
+    [self performSegueWithIdentifier:@"segue.join2" sender:self];
+    
 }
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    
+    if([[segue identifier] isEqualToString:@"segue.join2"]){
+        [segue.destinationViewController setClient:client];
+    }
+
+}
+
 
 //setting/passing the client to ViewController
 -(void) setClient:(CollabrifyClient*)client_segue {
     client = client_segue;
-    [client setDelegate:self];
+    //[client setDelegate:self];
     //participationID = [client participantID];
 }
-
-
 @end

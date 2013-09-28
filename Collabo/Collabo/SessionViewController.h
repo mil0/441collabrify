@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <Collabrify/Collabrify.h>
+#import "ViewController.h"
 
 @interface SessionViewController : UITableViewController{
     NSMutableArray * sessionList;
