@@ -55,11 +55,12 @@
     //[self.navigationController setNavigationBarHidden:NO];
     
     //two buttons on rightside of navigation controller
-    
+    //self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects: _undo2, _redo2, nil];
 
     
-    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects: _undo2, _redo2, nil];
-
+    //setting participationID when user enters
+    participationID = [client participantID];
+    NSLog(@"Participation ID: %d", participationID);
 }
 
 
@@ -67,6 +68,7 @@
 -(void) setClient:(CollabrifyClient*)client_segue {
     client = client_segue;
     [client setDelegate:self];
+    //participationID = [client participantID];
 }
 
 
