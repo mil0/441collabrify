@@ -185,7 +185,6 @@
     if([[segue identifier] isEqualToString:@"segue.join2"]){
         [segue.destinationViewController setClient:client];
     }
-
 }
 
 
