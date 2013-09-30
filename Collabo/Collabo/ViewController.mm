@@ -294,8 +294,8 @@
     
 
     if (currentEvent->event->eventtype() == REMOVE) {
-        currentEvent->event->set_initialcursorlocation(newCL);
-        currentEvent->event->set_newcursorlocation(initCL);
+        currentEvent->event->set_initialcursorlocation(initCL);
+        currentEvent->event->set_newcursorlocation(newCL);
     }
     //old code
 //    if (currentEvent->event->eventtype() == REMOVE) {
@@ -306,7 +306,7 @@
     
     
     //reset cursor location
-    //cursorStart = _textView.selectedRange.location;
+    cursorStart = _textView.selectedRange.location;
     //[self applyEvent:currentEvent];
     //add currentEvent to undo stack
     EventMessage * eventToBroadcast = currentEvent;
