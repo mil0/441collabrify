@@ -277,7 +277,7 @@
     NSError *error;
     
     [currentEvent initWithType:currentEvent->event->eventtype()
-         initialCursorLocation:cursorStart
+         initialCursorLocation:_textView.selectedRange.location - [currentEventString length]
              newCursorLocation:_textView.selectedRange.location
                         Length:[currentEventString length]
                           Text:currentEventString id:participationID];
