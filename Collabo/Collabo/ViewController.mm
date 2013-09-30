@@ -187,6 +187,7 @@
     
     // get cursor
     NSUInteger cursorPosition = textView.selectedRange.location;
+    cursorStart = cursorPosition;
     // NSLog([NSString stringWithFormat:@"Cursor Position: %d", cursorPosition]);
     [eventDelay invalidate]; eventDelay = nil;
     
