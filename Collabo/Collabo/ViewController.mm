@@ -294,8 +294,8 @@
     
 
     if (currentEvent->event->eventtype() == REMOVE) {
-        currentEvent->event->set_initialcursorlocation(initCL);
-        currentEvent->event->set_newcursorlocation(newCL);
+        currentEvent->event->set_initialcursorlocation(newCL);
+        currentEvent->event->set_newcursorlocation(initCL);
     }
     //old code
 //    if (currentEvent->event->eventtype() == REMOVE) {
