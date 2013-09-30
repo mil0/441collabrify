@@ -282,22 +282,31 @@
     NSLog(@"Event Fired");
     NSError *error;
     
+    int32_t currentEventString_length = [currentEventString length];
+    int32_t newCL = _textView.selectedRange.location;
+    int32_t initCL = newCL - currentEventString_length;
+    
     [currentEvent initWithType:currentEvent->event->eventtype()
-         initialCursorLocation:cursorStart
-             newCursorLocation:_textView.selectedRange.location
-                        Length:[currentEventString length]
+         initialCursorLocation:initCL
+             newCursorLocation:newCL
+                        Length:currentEventString_length
                           Text:currentEventString id:participationID];
     
 
     if (currentEvent->event->eventtype() == REMOVE) {
-        currentEvent->event->set_initialcursorlocation(_textView.selectedRange.location);
-        currentEvent->event->set_newcursorlocation(cursorStart);
+        currentEvent->event->set_initialcursorlocation(newCL);
+        currentEvent->event->set_newcursorlocation(initCL);
     }
+    //old code
+//    if (currentEvent->event->eventtype() == REMOVE) {
+//        currentEvent->event->set_initialcursorlocation(_textView.selectedRange.location);
+//        currentEvent->event->set_newcursorlocation(cursorStart);
+//    }
     
     
     
     //reset cursor location
-    cursorStart = _textView.selectedRange.location;
+    //cursorStart = _textView.selectedRange.location;
     //[self applyEvent:currentEvent];
     //add currentEvent to undo stack
     EventMessage * eventToBroadcast = currentEvent;
