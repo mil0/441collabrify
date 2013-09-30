@@ -187,7 +187,7 @@
     
     // get cursor
     NSUInteger cursorPosition = textView.selectedRange.location;
-    cursorStart = cursorPosition;
+    //cursorStart = cursorPosition;
     // NSLog([NSString stringWithFormat:@"Cursor Position: %d", cursorPosition]);
     [eventDelay invalidate]; eventDelay = nil;
     
@@ -207,26 +207,19 @@
             return NO;
         }
         if (currentEvent->event->eventtype() == INSERT && [currentEventString length] > 0) {
+            
             [self broadcastEvent:eventDelay];
         }
         currentEvent->event->set_eventtype(REMOVE);
-        currentEventType = REMOVE;
-        //Shouldn't this set event as REMOVE as well?
-        //char deletedChar = [[_textView text] characterAtIndex:cursorPosition-1];
+        currentEventType = REMOVE;        
         
-        
-        //[currentEventString appendFormat:@"%c", deletedChar];
         unichar deletedChar = [[_textView text] characterAtIndex:cursorPosition-1];
         currentEventString = [[NSMutableString stringWithCharacters:&deletedChar length:1] stringByAppendingString:currentEventString];
-        //[currentEventString appendFormat:@"%c", deletedChar];
-        
-        //deletion
-        //NSLog(@"deleted");
-        //NSLog(currentEventString);
     }
     else {
         //if you were deleting, you aren't anymore, so make discrete event
         if (currentEvent->event->eventtype() == REMOVE && [currentEventString length] > 0) {
+            
             [self broadcastEvent:eventDelay];
         }
         currentEvent->event->set_eventtype(INSERT);
