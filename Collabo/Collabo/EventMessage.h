@@ -13,6 +13,8 @@
 @interface EventMessage : NSObject{
 @public
     Event * event;
+    int32_t submissionID;
+    int32_t orderID;
 }
 
 -(void) initWithType:(EventType)type initialCursorLocation:(int)location newCursorLocation:(int)newLocation Length:(int)length Text:(NSString *)text id:(::google::protobuf::int64_t)user_id;

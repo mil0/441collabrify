@@ -24,7 +24,7 @@
     undoStack = [[NSMutableArray alloc] initWithCapacity:30];
     redoStack = [[NSMutableArray alloc] initWithCapacity:30];
     globalStack = [[NSMutableArray alloc] initWithCapacity:60];
-    
+    myEvents = [[NSMutableDictionary alloc] init];
     
     //Alrt Views
     
@@ -60,7 +60,7 @@
     
     //setting participationID when user enters
     participationID = [client participantID];
-    NSLog(@"Participation ID: %d", participationID);
+    NSLog(@"Participation ID: %lld", participationID);
 }
 
 
@@ -234,13 +234,35 @@
 - (void)client:(CollabrifyClient *)client receivedEventWithOrderID:(int64_t)orderID submissionRegistrationID:(int32_t)submissionRegistrationID eventType:(NSString *)eventType data:(NSData *)data{
     EventMessage * received = [[EventMessage alloc] init];
     parseDelimitedEventFromData(*(received->event), data);
-    
+
     
     if (received) {
         //if event is not nil, add to queue
         NSLog(@"Received event with orderID: %lld", orderID);
+        
+        latest_orderID = orderID;
+        latest_orderID++;
+        
+        NSMutableArray * tempStack = [[NSMutableArray alloc] init];
 
-        [globalStack addObject:received];
+        
+        // check for conflict in globalStack[orderID]
+        EventMessage * possibleConflict = [globalStack objectAtIndex:orderID];
+        if (possibleConflict->event->userid() != received->event->userid()) {
+            //there's a conflict if the users for the two events are different
+            int count = [globalStack count];
+            while (count - orderID >= 0) {
+                //pop off event, reapply
+                EventMessage * toUndo = [self reverseEvent:[globalStack lastObject]];
+                [self applyEvent:toUndo];
+                [tempStack addObject:[globalStack lastObject]];
+                [globalStack removeLastObject];
+                count--;
+            }
+            
+            
+        }
+        
         
         //apply event if it's not from your changeset
         if (received->event->userid() != participationID) {
@@ -251,9 +273,17 @@
             dispatch_async(dispatch_get_main_queue(), ^(void){
                 [self applyEvent:received];
             });
+            [globalStack addObject:received];
+
+        }
+        else if([tempStack count] > 0){
+            while ([tempStack count]) {
+                [self applyEvent:[tempStack lastObject]];
+                [tempStack removeLastObject];
+            }
         }
         else {
-            latest_orderID = orderID;
+       
             if (undo_trigger) {
                 //NSNumber * undo_ID = [NSNumber numberWithInt:orderID];
                 [redoStack addObject:[NSNumber numberWithInteger:latest_orderID]];
@@ -300,13 +330,18 @@
 //    }
     
     //broadcast event to other clients
-    int32_t submissionID = [client broadcast:(dataForEvent(*(currentEvent->event))) eventType:@"INSERT"];
+    int32_t submissionID = [client broadcast:(dataForEvent(*(currentEvent->event))) eventType:[NSString stringWithFormat:@"%d", currentEvent->event->eventtype()]];
     
     //NSLog([NSString stringWithFormat:@"submissionID: %d", submissionID]);
     NSLog(@"Current Event String: %@", currentEventString);
     NSLog(@"Current Event Start Cursor Locaiton: %d", eventToBroadcast->event->initialcursorlocation());
     NSLog(@"Current Event Ending Cursor Locaiton: %d", eventToBroadcast->event->newcursorlocation());
     NSLog(@"Current Event Type: %d", eventToBroadcast->event->eventtype());
+    
+    eventToBroadcast->orderID = latest_orderID++;
+    eventToBroadcast->submissionID = submissionID;
+    [globalStack addObject:eventToBroadcast];
+    [myEvents setObject:eventToBroadcast forKey:[NSString stringWithFormat:@"%d", submissionID]];
     
     //reset currentEventString
     currentEventString = [[NSMutableString alloc] init];

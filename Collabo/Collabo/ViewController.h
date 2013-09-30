@@ -19,8 +19,11 @@
     NSMutableArray * undoStack;
     NSMutableArray * redoStack;
     NSMutableArray * globalStack;
+    NSMutableDictionary * myEvents;
+    
     int64_t participationID; // participation ID - set when user creates/join session
     int32_t cursorStart;
+    
     EventMessage * currentEvent;
     EventType currentEventType;
     
