@@ -247,22 +247,24 @@
 
         
         // check for conflict in globalStack[orderID]
-        EventMessage * possibleConflict = [globalStack objectAtIndex:orderID];
-        if (possibleConflict->event->userid() != received->event->userid()) {
-            //there's a conflict if the users for the two events are different
-            int count = [globalStack count];
-            while (count - orderID >= 0) {
-                //pop off event, reapply
-                EventMessage * toUndo = [self reverseEvent:[globalStack lastObject]];
-                [self applyEvent:toUndo];
-                [tempStack addObject:[globalStack lastObject]];
-                [globalStack removeLastObject];
-                count--;
+        if ([globalStack count]) {
+            EventMessage * possibleConflict = [globalStack objectAtIndex:orderID];
+            
+            if (possibleConflict->event->userid() != received->event->userid()) {
+                //there's a conflict if the users for the two events are different
+                int count = [globalStack count];
+                while (count - orderID >= 0) {
+                    //pop off event, reapply
+                    EventMessage * toUndo = [self reverseEvent:[globalStack lastObject]];
+                    [self applyEvent:toUndo];
+                    [tempStack addObject:[globalStack lastObject]];
+                    [globalStack removeLastObject];
+                    count--;
+                }
+                
+                
             }
-            
-            
         }
-        
         
         //apply event if it's not from your changeset
         if (received->event->userid() != participationID) {
