@@ -247,7 +247,7 @@
 
         
         // check for conflict in globalStack[orderID]
-        if ([globalStack count] > orderID) {
+        if ([globalStack count] >= orderID) {
             EventMessage * possibleConflict = [globalStack objectAtIndex:orderID];
             
             if (possibleConflict->event->userid() != received->event->userid()) {
