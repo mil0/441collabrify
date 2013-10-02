@@ -25,7 +25,7 @@
     redoStack = [[NSMutableArray alloc] initWithCapacity:30];
     globalStack = [[NSMutableArray alloc] initWithCapacity:60];
     myEvents = [[NSMutableDictionary alloc] init];
-    
+    cursorLocations = [[NSMutableDictionary alloc] init];
     //Alrt Views
     
     //Create Session Alert View
@@ -49,7 +49,7 @@
     
     undo_trigger = false;
     redo_trigger = false;
-    
+    cursorMoveDistance = 0;
     
     //SET navigation controller TOOLBAR
     [self.navigationController setNavigationBarHidden:YES];
@@ -70,45 +70,6 @@
     [client setDelegate:self];
     //participationID = [client participantID];
 }
-
-
-//HITTING THE BACK BUTTON <- Navigation controller / can delete later
-//-(void) viewWillDisappear:(BOOL)animated {
-//    if ([self.navigationController.viewControllers indexOfObject:self] == NSNotFound) {
-//        [self.navigationController setNavigationBarHidden:YES];
-//        
-//        [client leaveAndDeleteSession:YES completionHandler:
-//         ^(BOOL success, CollabrifyError *error){
-//             if (success) {
-//                 NSLog(@"logout completed");
-//             }
-//             else {   
-//                 NSLog(@"logout not completed");
-//                 
-//             }
-//             
-//         }];
-//
-//    }
-//    [super viewWillDisappear:animated];
-//}
-
-//FOR some reason EXIT button not working when going back to home screen.
-
-//Using this instead.
-//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-//    [client leaveAndDeleteSession:YES completionHandler:
-//     ^(BOOL success, CollabrifyError *error){
-//         if (success) {
-//             NSLog(@"logout completed");
-//         }
-//         else {
-//             NSLog(@"logout not completed");
-//             
-//         }
-//         
-//     }];
-//}
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
@@ -136,7 +97,6 @@
                          participationID = [client participantID]; // setting participation ID
                          NSLog([NSString stringWithFormat:@"Participation ID: %lld", participationID]);
                          
-                         
                      }
                      else {
                          NSLog(@"is not in sessoin");
@@ -162,22 +122,63 @@
 - (void)client:(CollabrifyClient *)client encounteredError:(CollabrifyError *)error{
     
     [ErrorOccurred show];
-    NSLog(@"LOL");
+    NSLog(@"Let's be serious.");
     //NSLog(@"Error received: %@", error);
 }
 
+- (void)resetTimer
+{
+    [eventDelay invalidate]; eventDelay = nil;
+    
+    //make new timer, after 1.5sec user has stopped typing
+    //register change
+    eventDelay = [NSTimer scheduledTimerWithTimeInterval:0.5
+                                                  target:self
+                                                selector:@selector(broadcastEvent:)
+                                                userInfo:nil
+                                                 repeats:NO];
+}
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+// idea is, i can push a cursorChangeEvent
+// this way, if cursors are after an event submitted, they can be updated to point to the correct place in everyone's cursor array
+//called when selecting textView or moving cursor
 - (void)textViewDidChangeSelection:(UITextView *)textView {
-    cursorStart = _textView.selectedRange.location;
-    NSLog(@"I'm moving my cursor: %d", cursorStart);
-    //unichar prevChar = [textView.text characterAtIndex:(location - 1)];
-    //NSString *prevCharStr = [NSString stringWithFormat:@"%C", prevChar];
+    if (cursorStart == _textView.selectedRange.location) {
+        NSLog(@"cursorStart == textView.selectedRange.location");
+    }
+    /*//this is the first time you select the box
+    [self resetTimer];
+    if (cursorMoveDistance == 0 && cursorStart == 0) {
+        NSLog(@"ima send some garbage data now, sheeeit");
+        currentEventType = CURSORMOVE;
+        currentEvent->event->set_eventtype(CURSORMOVE);
+    }
+    NSLog(@"I'm moving my cursor from: %d", cursorStart);
+    int32_t cursorMovePosition = _textView.selectedRange.location;
+    //if you're already moving your cursor, update the move event
+    if (currentEvent->event->eventtype() == CURSORMOVE) {
+        if (cursorStart < cursorMovePosition) {
+            //increasing the position of the cursor if 
+            cursorMoveDistance++;
+        }
+        else{
+            cursorMoveDistance--;
+        }
+    }
+    // if you're not moving your cursor, you're deleting or inserting,
+    // so apply and broadcast that event (since shouldChangeTextInRange applies event automagically)
+    else{
+        [self broadcastEvent:eventDelay];
+        cursorStart = _textView.selectedRange.location;
+        //then begin a new CURSORMOVE event
+        currentEventType = CURSORMOVE;
+        currentEvent->event->set_eventtype(currentEventType);
+    }*/
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
@@ -218,7 +219,8 @@
     }
     else {
         //if you were deleting, you aren't anymore, so make discrete event
-        if (currentEvent->event->eventtype() == REMOVE && [currentEventString length] > 0) {
+        if ((currentEvent->event->eventtype() == REMOVE && [currentEventString length] > 0) ||
+            (currentEvent->event->eventtype() == CURSORMOVE && cursorMoveDistance != 0)) {
             
             [self broadcastEvent:eventDelay];
         }
@@ -241,10 +243,14 @@
         NSLog(@"Received event with orderID: %lld", orderID);
         
         latest_orderID = orderID;
-        latest_orderID++;
         
         NSMutableArray * tempStack = [[NSMutableArray alloc] init];
-
+        NSLog(@"Data received %@", received);
+        NSLog(@"Received text: %s", received->event->textadded().c_str());
+        NSLog(@"Cursor Begin Location, %d", received->event->initialcursorlocation());
+        NSLog(@"Cursor End Location, %d", received->event->newcursorlocation());
+        NSLog(@"Event Type: %u", received->event->eventtype());
+        NSLog(@"Event ParticipationID: %lld", received->event->userid());
         
         // check for conflict in globalStack[orderID]
         if ([globalStack count] > orderID && [globalStack count]) {
@@ -268,11 +274,8 @@
         
         //apply event if it's not from your changeset
         if (received->event->userid() != participationID) {
-            NSLog(@"Data received %@", received);
-            NSLog(@"Received text: %s", received->event->textadded().c_str());
-            NSLog(@"Cursor Begin Location, %d", received->event->initialcursorlocation());
-            NSLog(@"Cursor End Location, %d", received->event->newcursorlocation());
             dispatch_async(dispatch_get_main_queue(), ^(void){
+                //this is crashing if we apply while we are typing.
                 [self applyEvent:received];
             });
             [globalStack addObject:received];
@@ -299,6 +302,7 @@
                 [undoStack addObject:[NSNumber numberWithInteger:latest_orderID]];
             }
         }
+    latest_orderID++;
     }
 }
 
@@ -307,17 +311,24 @@
     assert(t == eventDelay);
     NSLog(@"Event Fired");
     NSError *error;
-    
+    //initialize event with current member variables as of calling broadcastEvent
     [currentEvent initWithType:currentEvent->event->eventtype()
          initialCursorLocation:_textView.selectedRange.location - [currentEventString length]
              newCursorLocation:_textView.selectedRange.location
                         Length:[currentEventString length]
                           Text:currentEventString id:participationID];
     
-
+    //this could use similar logic as above..
     if (currentEvent->event->eventtype() == REMOVE) {
         currentEvent->event->set_initialcursorlocation(_textView.selectedRange.location);
         currentEvent->event->set_newcursorlocation(cursorStart);
+    } else if(currentEvent->event->eventtype() == CURSORMOVE){
+        if (cursorMoveDistance == 0) {
+            return;
+        }
+        currentEvent->event->set_changelength(cursorMoveDistance);
+        cursorMoveDistance = 0;
+        currentEvent->event->set_initialcursorlocation(cursorStart);
     }
     
     
@@ -342,6 +353,7 @@
     
     eventToBroadcast->orderID = latest_orderID++;
     eventToBroadcast->submissionID = submissionID;
+    //add to global history, as well as myEvents dictionary
     [globalStack addObject:eventToBroadcast];
     [myEvents setObject:eventToBroadcast forKey:[NSString stringWithFormat:@"%d", submissionID]];
     
@@ -384,6 +396,10 @@
             NSString * after = [textViewContent substringFromIndex:final_location];
             NSString * newTextViewContent = [before stringByAppendingString:after];
             _textView.text = newTextViewContent;
+        }
+        case CURSORMOVE:
+        {
+            
         }
             break;
         default:
@@ -470,11 +486,15 @@
     //signal put new event in redo stack
     undo_trigger = true;
     
+    reversed_undo_event->orderID = latest_orderID;
+    latest_orderID++;
     
-    [client broadcast:(dataForEvent(*(reversed_undo_event->event))) eventType:[NSString stringWithFormat:@"%u", reversed_undo_event->event->eventtype()]];
+    int32_t submissionID = [client broadcast:(dataForEvent(*(reversed_undo_event->event))) eventType:[NSString stringWithFormat:@"%u", reversed_undo_event->event->eventtype()]];
     //this has to happen because broadcast will not applyevent for you
+    reversed_undo_event->submissionID = submissionID;
     [self applyEvent:reversed_undo_event];
-    //[client broadcast:dataForEvent(reversed_undo_event) eventType:reversed_undo_event->event->eventtype()];
+    [globalStack addObject:reversed_undo_event];
+    [myEvents setObject:reversed_undo_event forKey:[NSString stringWithFormat:@"%d", submissionID]];
     
 }
 
@@ -531,11 +551,16 @@
     
     //signal put new event in redo stack
     redo_trigger = true;
+    reversed_redo_event->orderID = latest_orderID;
+    latest_orderID++;
+
     
-    
-    [client broadcast:(dataForEvent(*(reversed_redo_event->event))) eventType:[NSString stringWithFormat:@"%u", reversed_redo_event->event->eventtype()]];
+    int32_t submissionID = [client broadcast:(dataForEvent(*(reversed_redo_event->event))) eventType:[NSString stringWithFormat:@"%u", reversed_redo_event->event->eventtype()]];
+    reversed_redo_event->submissionID = submissionID;
     //this has to happen because broadcast will not applyevent for you
     [self applyEvent:reversed_redo_event];
+    [globalStack addObject:reversed_redo_event];
+    [myEvents setObject:reversed_redo_event forKey:[NSString stringWithFormat:@"%d", submissionID]];
     //[client broadcast:dataForEvent(reversed_undo_event) eventType:reversed_undo_event->event->eventtype()];
     
     

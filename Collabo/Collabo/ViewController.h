@@ -20,9 +20,10 @@
     NSMutableArray * redoStack;
     NSMutableArray * globalStack;
     NSMutableDictionary * myEvents;
-    
+    NSMutableDictionary * cursorLocations;
     int64_t participationID; // participation ID - set when user creates/join session
     int32_t cursorStart;
+    int32_t cursorMoveDistance;
     
     EventMessage * currentEvent;
     EventType currentEventType;
@@ -33,8 +34,6 @@
     BOOL undo_trigger;
     BOOL redo_trigger;
 
-    
-        
     //Alert Views
     UIAlertView * createSessionAlert;
     UIAlertView * ErrorOccurred;
@@ -55,6 +54,7 @@
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 
 NSData *dataForEvent(::google::protobuf::Message &message);
+- (void)resetTimer;
 
 
 NSData *parseDelimitedEventFromData(::google::protobuf::Message &message, NSData *data);
