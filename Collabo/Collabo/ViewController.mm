@@ -61,6 +61,11 @@
     //setting participationID when user enters
     participationID = [client participantID];
     NSLog(@"Participation ID: %lld", participationID);
+    
+    
+    [_undoButton setEnabled:NO];
+    [_redoButton setEnabled:NO];
+    
 }
 
 
@@ -304,6 +309,20 @@
         }
     latest_orderID++;
     }
+    
+    if ([undoStack count]) {
+        [_undoButton setEnabled:YES];
+    }
+    else {
+        [_undoButton setEnabled:NO];
+    }
+    if ([redoStack count]) {
+        [_redoButton setEnabled:YES];
+    }
+    else {
+        [_redoButton setEnabled:NO];
+    }
+    
 }
 
 //broadcast event, add to appropriate stack
@@ -433,6 +452,7 @@
 }
 
 - (IBAction)undo:(id)sender {
+    
     
     //[self.textView.undoManager undo];
     NSLog(@"undo");

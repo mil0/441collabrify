@@ -139,7 +139,9 @@
                     <navigationItem key="navigationItem" id="TEM-aK-lrO"/>
                     <connections>
                         <outlet property="redo2" destination="lGv-DQ-Rh3" id="izH-Da-4jG"/>
+                        <outlet property="redoButton" destination="lGv-DQ-Rh3" id="iZK-lD-ASa"/>
                         <outlet property="textView" destination="d8g-s6-3xa" id="ADS-ko-gFc"/>
+                        <outlet property="undoButton" destination="3Zn-v4-xrp" id="myB-pW-M2b"/>
                         <segue destination="umZ-Tq-FZc" kind="push" identifier="segue.main.push" id="JJu-0Y-fS6"/>
                     </connections>
                 </viewController>

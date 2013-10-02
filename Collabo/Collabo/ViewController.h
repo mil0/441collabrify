@@ -38,6 +38,8 @@
     UIAlertView * createSessionAlert;
     UIAlertView * ErrorOccurred;
 }
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *undoButton;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *redoButton;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *redo2;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *undo2;
