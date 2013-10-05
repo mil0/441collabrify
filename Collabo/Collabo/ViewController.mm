@@ -267,7 +267,8 @@
                 while (count - orderID >= 0) {
                     //pop off event, reapply
                     EventMessage * toUndo = [self reverseEvent:[globalStack lastObject]];
-                    [self applyEvent:toUndo];
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{[self applyEvent:toUndo];});
                     [tempStack addObject:[globalStack lastObject]];
                     [globalStack removeLastObject];
                     count--;
@@ -288,7 +289,7 @@
         }
         else if([tempStack count] > 0){
             while ([tempStack count]) {
-                [self applyEvent:[tempStack lastObject]];
+                dispatch_async(dispatch_get_main_queue(), ^{[self applyEvent:[tempStack lastObject]];});
                 [tempStack removeLastObject];
             }
         }
