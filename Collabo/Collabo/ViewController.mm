@@ -59,7 +59,7 @@
 
     
     //setting participationID when user enters
-    participationID = [client participantID];
+    //participationID = [client participantID];
     NSLog(@"Participation ID: %lld", participationID);
     
     
@@ -73,7 +73,8 @@
 -(void) setClient:(CollabrifyClient*)client_segue {
     client = client_segue;
     [client setDelegate:self];
-    //participationID = [client participantID];
+    participationID = [client participantID];
+    NSLog(@"Participation ID: %lld", participationID);
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex

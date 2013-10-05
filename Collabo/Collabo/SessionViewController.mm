@@ -160,7 +160,10 @@
                         NSLog(@"is in session, and SESSION ID IS:");
                         int64_t session_ID = [client currentSessionID];
                         NSLog([NSString stringWithFormat:@"%lld", session_ID]);
-                        //participationID = [client participantID]; // setting participationID
+                        participationID = [client participantID]; // setting participationID
+                        NSLog(@"Participation ID: %lld", participationID);
+                        [self performSegueWithIdentifier:@"segue.join2" sender:self];
+
                     }
                     else {
                         NSLog(@"NOT IN SESSION");
@@ -176,7 +179,6 @@
     
     
     
-    [self performSegueWithIdentifier:@"segue.join2" sender:self];
     
 }
 

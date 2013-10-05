@@ -13,6 +13,7 @@
 @interface SessionViewController : UITableViewController{
     NSMutableArray * sessionList;
     CollabrifyClient * client;
+    int32_t participationID;
 }
 - (void) setSessionList:(NSArray *)list;
 - (void) setClient:(CollabrifyClient *)client_segue;
