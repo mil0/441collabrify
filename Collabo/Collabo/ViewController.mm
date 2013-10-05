@@ -40,6 +40,10 @@
     ErrorOccurred.tag = 1;
     
     
+    participantJoined = [[UIAlertView alloc] initWithTitle:@"Participant Joined" message:@"" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil , nil];
+    participantJoined.alertViewStyle = UIAlertViewStyleDefault;
+    
+    
     cursorStart = 0;
     //turning autocorrection / auto-cap off
     _textView.autocorrectionType = UITextAutocorrectionTypeNo;
@@ -76,6 +80,11 @@
     participationID = [client participantID];
     NSLog(@"Participation ID: %lld", participationID);
 }
+
+- (void)client:(CollabrifyClient *)client participantJoined:(CollabrifyParticipant *)participant{
+    [participantJoined show];
+}
+
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {

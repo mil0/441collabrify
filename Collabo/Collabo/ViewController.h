@@ -37,6 +37,7 @@
     //Alert Views
     UIAlertView * createSessionAlert;
     UIAlertView * ErrorOccurred;
+    UIAlertView * participantJoined;
 }
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *undoButton;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *redoButton;
