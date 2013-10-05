@@ -266,7 +266,7 @@
             if (possibleConflict->event->userid() != received->event->userid()) {
                 //there's a conflict if the users for the two events are different
                 int count = [globalStack count];
-                while (count - orderID >= 0) {
+                while (count - orderID > 0) {
                     //pop off event, reapply
                     EventMessage * toUndo = [self reverseEvent:[globalStack lastObject]];
                     
