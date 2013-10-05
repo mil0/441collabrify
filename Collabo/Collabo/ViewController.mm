@@ -343,15 +343,16 @@
     //this could use similar logic as above..
     if (currentEvent->event->eventtype() == REMOVE) {
         currentEvent->event->set_initialcursorlocation(_textView.selectedRange.location);
-        currentEvent->event->set_newcursorlocation(cursorStart);
-    } else if(currentEvent->event->eventtype() == CURSORMOVE){
-        if (cursorMoveDistance == 0) {
-            return;
-        }
-        currentEvent->event->set_changelength(cursorMoveDistance);
-        cursorMoveDistance = 0;
-        currentEvent->event->set_initialcursorlocation(cursorStart);
+        currentEvent->event->set_newcursorlocation(_textView.selectedRange.location + [currentEventString length]);
     }
+//    else if(currentEvent->event->eventtype() == CURSORMOVE){
+//        if (cursorMoveDistance == 0) {
+//            return;
+//        }
+//        currentEvent->event->set_changelength(cursorMoveDistance);
+//        cursorMoveDistance = 0;
+//        currentEvent->event->set_initialcursorlocation(cursorStart);
+//    }
     
     
     
