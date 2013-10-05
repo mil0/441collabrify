@@ -184,6 +184,7 @@
         currentEventType = CURSORMOVE;
         currentEvent->event->set_eventtype(currentEventType);
     }*/
+    cursorStart = _textView.selectedRange.location;
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
