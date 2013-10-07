@@ -43,6 +43,8 @@
     participantJoined = [[UIAlertView alloc] initWithTitle:@"Participant Joined" message:@"" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil , nil];
     participantJoined.alertViewStyle = UIAlertViewStyleDefault;
     
+    participantLeft = [[UIAlertView alloc] initWithTitle:@"Participant Left" message:@"" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil , nil];
+    participantLeft.alertViewStyle = UIAlertViewStyleDefault;
     
     cursorStart = 0;
     //turning autocorrection / auto-cap off
@@ -84,6 +86,11 @@
 - (void)client:(CollabrifyClient *)client participantJoined:(CollabrifyParticipant *)participant{
     [participantJoined show];
 }
+
+- (void)client:(CollabrifyClient *)client participantLeft:(CollabrifyParticipant *)participant{
+    [participantLeft show];
+}
+
 
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
@@ -200,6 +207,9 @@
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
     if(range.length > 1){
         return NO;
+    }
+    if (![_undoButton isEnabled]) {
+        [_undoButton setEnabled:YES];
     }
     
     // get cursor
@@ -513,9 +523,7 @@
     
     reversed_undo_event->event->set_initialcursorlocation(undo_initcursorLocation);
     reversed_undo_event->event->set_newcursorlocation(undo_newcursorLocation);
-    
-    //broadcast the event
-    
+        
     //signal put new event in redo stack
     undo_trigger = true;
     
@@ -529,6 +537,12 @@
     [globalStack addObject:reversed_undo_event];
     [myEvents setObject:reversed_undo_event forKey:[NSString stringWithFormat:@"%d", submissionID]];
     
+    if ([undoStack count] == 0) {
+        [_undoButton setEnabled:NO];
+    }
+    if (![_redoButton isEnabled]) {
+        [_redoButton setEnabled:YES];
+    }
 }
 
 // Redoing
@@ -596,7 +610,12 @@
     [myEvents setObject:reversed_redo_event forKey:[NSString stringWithFormat:@"%d", submissionID]];
     //[client broadcast:dataForEvent(reversed_undo_event) eventType:reversed_undo_event->event->eventtype()];
     
-    
+    if (![redoStack count]) {
+        [_redoButton setEnabled:NO];
+    }
+    if (![_undoButton isEnabled]) {
+        [_undoButton setEnabled:YES];
+    }
 }
 
 - (IBAction)create:(id)sender {
